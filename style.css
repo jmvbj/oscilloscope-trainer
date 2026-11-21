@@ -1488,539 +1488,899 @@ body {
   color: #fff;
 }
 
-/* ==================== 底部：零基础新手知识学院 (Beginner Academy) ==================== */
+/* ==================== 底部：零基础新手知识图鉴 (5页翻页式可视化画册) ==================== */
 .academy-section {
   max-width: 1820px;
   width: 100%;
-  margin: 4px auto 32px;
+  margin: 8px auto 36px;
   padding: 0 16px;
 }
 
-.academy-container {
-  background: #151922;
-  border: 1px solid #2b3346;
+.academy-deck {
+  background: #141821;
+  border: 1px solid #283042;
   border-radius: 14px;
-  padding: 20px 24px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55);
 }
 
-.academy-header {
+/* 画册顶部栏 */
+.deck-topbar {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  border-bottom: 1px solid #262f42;
-  padding-bottom: 16px;
-  margin-bottom: 18px;
+  gap: 16px;
+  padding: 16px 24px;
+  background: #10141c;
   flex-wrap: wrap;
 }
 
-.academy-pill {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 11px;
+.deck-heading {
+  font-size: 19px;
   font-weight: 700;
-  color: var(--ch2-color);
-  background: rgba(0, 229, 255, 0.12);
-  border: 1px solid rgba(0, 229, 255, 0.35);
-  padding: 2px 9px;
-  border-radius: 4px;
-  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
 }
 
-.academy-title {
-  font-size: 20px;
-  color: #fff;
-  margin-bottom: 4px;
+.deck-lead {
+  font-size: 12.5px;
+  color: #8fa3bf;
+  margin-top: 2px;
 }
 
-.academy-subtitle {
-  font-size: 13px;
-  color: var(--text-secondary);
-  max-width: 780px;
-  line-height: 1.5;
-}
-
-.academy-nav-tabs {
+.deck-chapter-pills {
   display: flex;
   gap: 6px;
-  background: #0e1219;
+  background: #0a0d13;
   padding: 4px;
-  border-radius: 8px;
-  border: 1px solid #252e40;
+  border-radius: 10px;
+  border: 1px solid #222a3a;
   flex-wrap: wrap;
 }
 
-.acad-tab {
+.chapter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: transparent;
   border: none;
-  color: var(--text-secondary);
+  color: #94a3b8;
   font-size: 12.5px;
   font-weight: 600;
-  padding: 8px 13px;
-  border-radius: 6px;
+  padding: 7px 13px;
+  border-radius: 7px;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.16s ease;
 }
 
-.acad-tab:hover {
-  color: #fff;
+.chapter-pill:hover {
+  color: #f8fafc;
   background: rgba(255, 255, 255, 0.04);
 }
 
-.acad-tab.active {
+.chapter-pill.active {
   background: #2563eb;
   color: #fff;
 }
 
-.acad-pane.hidden {
-  display: none;
-}
-
-/* 模块 1：工作原理交互信号链路图 */
-.principle-intro h3 {
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 4px;
-}
-
-.principle-intro p {
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin-bottom: 14px;
-}
-
-.signal-pipeline {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
-.pipe-node {
-  flex: 1;
-  min-width: 155px;
-  background: #1b212e;
-  border: 1px solid #354056;
-  border-radius: 9px;
-  padding: 11px 10px;
-  text-align: left;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  transition: all 0.16s ease;
-}
-
-.pipe-node:hover {
-  border-color: var(--ch1-color);
-  transform: translateY(-2px);
-}
-
-.pipe-node.active {
-  background: linear-gradient(180deg, rgba(255, 212, 38, 0.16), rgba(255, 212, 38, 0.05));
-  border-color: var(--ch1-color);
-  box-shadow: 0 0 15px rgba(255, 212, 38, 0.2);
-}
-
-.pipe-step {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--ch1-color);
-}
-
-.pipe-node strong {
-  font-size: 13px;
-  color: #fff;
-}
-
-.pipe-node em {
-  font-style: normal;
+.cp-idx {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: #8fa3bf;
+  opacity: 0.75;
 }
 
-.pipe-arrow {
+.deck-page-counter {
   font-family: var(--font-mono);
-  font-size: 18px;
-  color: #5b6b86;
-  font-weight: 700;
-}
-
-.pipe-detail-card {
-  display: grid;
-  grid-template-columns: 1fr 290px;
-  gap: 18px;
-  background: #10141c;
-  border: 1px solid #283246;
-  border-left: 4px solid var(--ch1-color);
-  border-radius: 10px;
-  padding: 16px 18px;
-  align-items: center;
-}
-
-.pipe-badge {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ch1-color);
-  margin-bottom: 4px;
-}
-
-.pipe-detail-main h4 {
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 8px;
-}
-
-.pipe-analogy,
-.pipe-explain {
   font-size: 13px;
-  line-height: 1.65;
-  color: #d1d9e6;
-  margin-bottom: 6px;
-}
-
-.pipe-ctrl-box {
-  background: #171c27;
-  border: 1px solid #2e384e;
-  border-radius: 8px;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.pipe-ctrl-box span {
-  font-size: 11px;
-  color: var(--text-secondary);
-}
-
-.pipe-ctrl-box strong {
-  font-size: 13px;
-  color: var(--ch2-color);
-}
-
-/* 模块 2：四大核心指标与带宽选型计算器 */
-.specs-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  margin-bottom: 16px;
-}
-
-.spec-card {
-  background: #10141c;
-  border: 1px solid #263044;
-  border-radius: 10px;
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-}
-
-.spec-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.spec-num {
-  font-family: var(--font-mono);
-  font-size: 18px;
   font-weight: 700;
   color: var(--ch1-color);
   background: rgba(255, 212, 38, 0.12);
   border: 1px solid rgba(255, 212, 38, 0.35);
-  width: 38px;
-  height: 38px;
+  padding: 5px 12px;
+  border-radius: 7px;
+}
+
+.deck-progress-track {
+  height: 3px;
+  background: #1b2230;
+  width: 100%;
+}
+
+.deck-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ch1-color), var(--ch2-color));
+  transition: width 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 画册单页容器 */
+.deck-page {
+  padding: 22px 26px;
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  animation: deckFadeIn 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.deck-page.hidden {
+  display: none;
+}
+
+@keyframes deckFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==================== PAGE 1：工作原理发光信号链 ==================== */
+.page-hero-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.page-hero-banner h3 {
+  font-size: 16.5px;
+  color: #f8fafc;
+  margin-bottom: 3px;
+}
+
+.page-hero-banner p {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.btn-locate-up {
+  background: rgba(255, 212, 38, 0.14);
+  border: 1px solid var(--ch1-color);
+  color: var(--ch1-color);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 14px;
   border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-locate-up:hover {
+  background: var(--ch1-color);
+  color: #000;
+}
+
+.pipeline-stage {
+  position: relative;
+  padding: 10px 0;
+}
+
+.pipe-track-line {
+  position: absolute;
+  top: 50%;
+  left: 4%;
+  right: 4%;
+  height: 3px;
+  background: #252f42;
+  transform: translateY(-50%);
+  z-index: 0;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.pipe-pulse-dot {
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--ch1-color), var(--ch2-color), transparent);
+  animation: flowPulse 2.6s infinite linear;
+}
+
+@keyframes flowPulse {
+  0% { transform: translateX(-140px); }
+  100% { transform: translateX(1500px); }
+}
+
+.signal-pipeline {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.pipe-node {
+  background: #1a202c;
+  border: 1px solid #313b50;
+  border-radius: 12px;
+  padding: 14px 12px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.18s ease;
+}
+
+.pipe-node:hover {
+  border-color: #64748b;
+  transform: translateY(-2px);
+}
+
+.pipe-node.active {
+  background: #1e2638;
+  border-color: var(--ch1-color);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+.pipe-icon-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #111620;
+  border: 1px solid #3b4760;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.spec-head h4 {
-  font-size: 15px;
-  color: #fff;
-}
-
-.spec-head em {
-  font-style: normal;
-  font-size: 12px;
-  color: #8fa3bf;
-}
-
-.spec-card p {
-  font-size: 13px;
-  line-height: 1.6;
-  color: #cbd5e1;
-}
-
-.spec-rule {
-  background: rgba(37, 99, 235, 0.1);
-  border-left: 3px solid #3b82f6;
-  padding: 8px 11px;
-  border-radius: 4px;
-  font-size: 12.5px;
-  line-height: 1.55;
-  color: #dbeafe;
-}
-
-.bw-calculator-box {
-  background: linear-gradient(135deg, #172033 0%, #111622 100%);
-  border: 1px solid #334568;
-  border-radius: 10px;
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.calc-left h4 {
-  font-size: 15px;
-  color: var(--ch1-color);
-  margin-bottom: 3px;
-}
-
-.calc-left p {
-  font-size: 12.5px;
-  color: #b4c2d8;
-}
-
-.calc-controls {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  flex-wrap: wrap;
-}
-
-.calc-controls label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-}
-
-.calc-controls input {
-  width: 85px;
-  background: #0c1018;
-  border: 1px solid var(--ch1-color);
-  color: var(--ch1-color);
-  font-family: var(--font-mono);
-  font-size: 15px;
-  font-weight: 700;
-  padding: 5px 8px;
-  border-radius: 6px;
-  text-align: right;
-}
-
-.calc-results {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.calc-res-item {
-  background: #0d121b;
-  border: 1px solid #28354e;
-  border-radius: 7px;
-  padding: 7px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.calc-res-item span {
-  font-size: 11px;
-  color: #8fa3bf;
-}
-
-.calc-res-item strong {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  color: var(--run-green);
-}
-
-/* 模块 3：示波器常见分类 */
-.types-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-
-.type-card {
-  background: #10141c;
-  border: 1px solid #263044;
-  border-radius: 10px;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.type-card.highlight-type {
+.pipe-node.active .pipe-icon-circle {
+  background: var(--ch1-color);
   border-color: var(--ch1-color);
-  background: linear-gradient(180deg, rgba(255, 212, 38, 0.08), #10141c 45%);
+  color: #000;
 }
 
-.type-era {
+.pipe-node strong {
+  font-size: 13.5px;
+  color: #f8fafc;
+}
+
+.pipe-node em {
+  font-style: normal;
+  font-size: 11.5px;
+  color: #8fa3bf;
+}
+
+.pipe-spotlight-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1.2fr 1.4fr;
+  gap: 18px;
+  background: #0f131b;
+  border: 1px solid #242d3f;
+  border-radius: 12px;
+  padding: 18px 22px;
+  align-items: start;
+}
+
+.spot-step-tag {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--ch2-color);
-}
-
-.type-card h4 {
-  font-size: 14.5px;
-  color: #fff;
-}
-
-.type-card p {
-  font-size: 12.5px;
-  color: #b4c2d8;
-  line-height: 1.55;
-}
-
-.type-card ul {
-  padding-left: 16px;
-  font-size: 12px;
-  color: #cbd5e1;
-  line-height: 1.6;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-/* 模块 4：主流品牌与经典型号对比表 */
-.models-intro h3 {
-  font-size: 16px;
-  color: #fff;
+  font-weight: 700;
+  color: var(--ch1-color);
   margin-bottom: 4px;
 }
 
-.models-intro p {
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin-bottom: 12px;
+.spot-visual h4 {
+  font-size: 17px;
+  color: #fff;
+  margin-bottom: 10px;
 }
 
-.brand-table-wrap {
-  overflow-x: auto;
+.spot-ctrl-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #171e2b;
+  border: 1px solid #2c3850;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
 }
 
-.brand-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #10141c;
-  border-radius: 10px;
-  overflow: hidden;
-  font-size: 12.5px;
-}
+.spot-ctrl-chip span { color: #8fa3bf; }
+.spot-ctrl-chip strong { color: var(--ch2-color); }
 
-.brand-table th {
-  background: #1b2230;
-  color: #e2e8f0;
-  text-align: left;
-  padding: 11px 14px;
+.spot-col-label {
+  display: inline-block;
+  font-size: 11.5px;
   font-weight: 700;
-  border-bottom: 1px solid #2e384e;
+  color: #93c5fd;
+  margin-bottom: 6px;
 }
 
-.brand-table td {
-  padding: 11px 14px;
-  border-bottom: 1px solid #1e2636;
-  color: #cbd5e1;
-  line-height: 1.55;
-  vertical-align: top;
+.spot-text {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #dbe4f0;
 }
 
-.brand-table tr:hover td {
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.brand-name {
-  display: block;
-  font-size: 14px;
-}
-
-.brand-sub {
-  display: block;
-  font-size: 11px;
-  color: #8fa3bf;
-  margin-top: 2px;
-}
-
-/* 模块 5：防炸机安全铁律与 1X/10X 探头指南 */
-.safety-grid {
+/* ==================== PAGE 2：四大核心指标 SVG 可视化卡片 + 滑块选型 ==================== */
+.visual-specs-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
 }
 
-.safety-card {
-  background: #10141c;
-  border-radius: 10px;
-  padding: 16px 18px;
+.vspec-card {
+  background: #0f131b;
+  border: 1px solid #242d3f;
+  border-radius: 12px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.safety-card.danger-card {
-  border: 1px solid rgba(255, 59, 78, 0.55);
-  border-left: 5px solid var(--stop-red);
+.vspec-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-.safety-card.warning-card {
-  border: 1px solid rgba(255, 212, 38, 0.55);
-  border-left: 5px solid var(--ch1-color);
+.vspec-top h4 {
+  font-size: 15px;
+  color: #fff;
+  margin-bottom: 2px;
 }
 
-.safety-tag {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--stop-red);
+.vspec-top span {
+  font-size: 11.5px;
+  color: #8fa3bf;
 }
 
-.warning-card .safety-tag {
+.vspec-top span strong {
   color: var(--ch1-color);
 }
 
-.safety-card h4 {
+.vspec-unit {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ch2-color);
+  background: rgba(0, 229, 255, 0.1);
+  padding: 2px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.vspec-svg-box {
+  background: #070b11;
+  border: 1px solid #1b2434;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.vspec-svg {
+  width: 100%;
+  height: 64px;
+  display: block;
+}
+
+.vspec-card p {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #cbd5e1;
+}
+
+.interactive-calc-bar {
+  background: #101622;
+  border: 1px solid #2b3954;
+  border-radius: 12px;
+  padding: 14px 20px;
+  display: grid;
+  grid-template-columns: 1.1fr 1.4fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.icalc-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #dbe4f0;
+  margin-bottom: 8px;
+}
+
+.icalc-freq-readout {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  color: var(--ch1-color);
+}
+
+.icalc-range {
+  width: 100%;
+  accent-color: var(--ch1-color);
+  cursor: pointer;
+}
+
+.icalc-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #7c8da6;
+  margin-top: 5px;
+}
+
+.icalc-output-pills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.icalc-pill {
+  flex: 1;
+  min-width: 130px;
+  background: #0a0e16;
+  border: 1px solid #222e45;
+  border-radius: 8px;
+  padding: 9px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.icalc-pill.wide {
+  flex: 2;
+  min-width: 240px;
+}
+
+.icalc-pill span {
+  font-size: 11px;
+  color: #8fa3bf;
+}
+
+.icalc-pill strong {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  color: var(--run-green);
+}
+
+/* ==================== PAGE 3：四类示波器演进对比图谱 ==================== */
+.evo-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.evo-card {
+  background: #0f131b;
+  border: 1px solid #242d3f;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.evo-card.featured {
+  border-color: var(--ch1-color);
+  background: #141a26;
+}
+
+.evo-svg-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.evo-icon-svg {
+  width: 96px;
+  height: 52px;
+}
+
+.evo-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 5px;
+}
+
+.evo-badge.muted { background: #1e2636; color: #94a3b8; }
+.evo-badge.gold { background: rgba(255, 212, 38, 0.16); color: var(--ch1-color); }
+.evo-badge.cyan { background: rgba(0, 229, 255, 0.14); color: var(--ch2-color); }
+.evo-badge.purple { background: rgba(168, 85, 247, 0.16); color: #c084fc; }
+
+.evo-card h4 {
   font-size: 16px;
   color: #fff;
 }
 
-.safety-card p {
+.evo-card p {
   font-size: 13px;
-  line-height: 1.6;
-  color: #d1d9e6;
+  color: #9ba8bd;
+  line-height: 1.55;
 }
 
-.safety-card ul {
-  padding-left: 18px;
-  font-size: 12.5px;
-  line-height: 1.65;
+.evo-tags {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.etag {
+  font-size: 12px;
+  padding: 5px 9px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.etag.pro { background: rgba(34, 229, 104, 0.1); color: #86efac; }
+.etag.con { background: rgba(255, 59, 78, 0.1); color: #fca5a5; }
+.etag.info { background: rgba(56, 189, 248, 0.12); color: #7dd3fc; }
+
+/* ==================== PAGE 4：主流品牌与经典神机画廊 ==================== */
+.models-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: #9ba8bd;
+}
+
+.model-filter-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.mfilter-btn {
+  background: #0f131b;
+  border: 1px solid #283246;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mfilter-btn:hover {
+  color: #fff;
+  border-color: #475569;
+}
+
+.mfilter-btn.active {
+  background: rgba(255, 212, 38, 0.15);
+  border-color: var(--ch1-color);
+  color: var(--ch1-color);
+}
+
+.models-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.model-card {
+  background: #0f131b;
+  border: 1px solid #242d3f;
+  border-radius: 12px;
+  padding: 15px 17px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.model-card:hover {
+  border-color: #4f6080;
+  transform: translateY(-2px);
+}
+
+.model-card.hidden-card {
+  display: none;
+}
+
+.mcard-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mcard-brand {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mcard-price {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: #e2e8f0;
+  background: #1a2232;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+
+.model-card h4 {
+  font-size: 15.5px;
+  color: #fff;
+}
+
+.model-card h4 small {
+  font-size: 12px;
+  color: #8fa3bf;
+  font-weight: 500;
+}
+
+.mcard-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.mcard-specs span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: #161d2b;
+  border: 1px solid #28344c;
   color: #cbd5e1;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.mcard-specs span.hi {
+  border-color: rgba(34, 229, 104, 0.5);
+  color: var(--run-green);
+}
+
+.model-card p {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #9ba8bd;
+}
+
+/* ==================== PAGE 5：防炸机电路图解 & 1X/10X 探头拨杆模拟器 ==================== */
+.safety-visual-split {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 16px;
+}
+
+.safety-box {
+  background: #0f131b;
+  border: 1px solid #263044;
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.safety-box.danger-theme {
+  border-color: rgba(255, 59, 78, 0.45);
+}
+
+.safety-box.gold-theme {
+  border-color: rgba(255, 212, 38, 0.45);
+}
+
+.sbox-pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+.sbox-pill.red {
+  background: rgba(255, 59, 78, 0.16);
+  color: #ff6b7b;
+}
+
+.sbox-pill.gold {
+  background: rgba(255, 212, 38, 0.16);
+  color: var(--ch1-color);
+}
+
+.sbox-head h4 {
+  font-size: 15.5px;
+  color: #fff;
+}
+
+.sbox-svg-stage {
+  background: #070b11;
+  border: 1px solid #1b2434;
+  border-radius: 9px;
+  padding: 10px;
+}
+
+.safety-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.probe-sim-widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.probe-switch-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 12.5px;
+  color: #cbd5e1;
+}
+
+.probe-rocker {
+  display: flex;
+  background: #080b11;
+  border: 1px solid #2b364d;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.procker-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.procker-btn.active {
+  background: var(--ch1-color);
+  color: #000;
+}
+
+.probe-sim-display {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.psim-svg {
+  width: 100%;
+  height: 82px;
+  display: block;
+}
+
+.psim-stats {
   display: flex;
   flex-direction: column;
   gap: 7px;
+  background: #141a26;
+  border: 1px solid #242f46;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+}
+
+.pstat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.pstat-row span { color: #8fa3bf; font-size: 11px; }
+.pstat-row strong { color: #f8fafc; font-family: var(--font-mono); }
+.pstat-row strong.ok { color: var(--run-green); }
+.pstat-row strong.bad { color: var(--stop-red); }
+
+/* 画册底部翻页栏 */
+.deck-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 24px;
+  background: #0e121a;
+  border-top: 1px solid #222a3a;
+}
+
+.deck-nav-btn {
+  background: #1a2130;
+  border: 1px solid #334059;
+  color: #dbe4f0;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.deck-nav-btn:hover:not(:disabled) {
+  border-color: #64748b;
+  color: #fff;
+}
+
+.deck-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.deck-nav-btn.primary {
+  background: #2563eb;
+  border-color: #3b82f6;
+  color: #fff;
+}
+
+.deck-nav-btn.primary:hover {
+  background: #1d4ed8;
+}
+
+.deck-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.ddot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2b3548;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ddot.active {
+  width: 28px;
+  border-radius: 5px;
+  background: var(--ch1-color);
+}
+
+/* 自定义浏览器滚动条与选中态 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0e14;
+}
+::-webkit-scrollbar-thumb {
+  background: #2b3548;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+::selection {
+  background: rgba(255, 212, 38, 0.28);
+  color: #fff;
 }
 
 @media (max-width: 1320px) {
   .workspace {
     grid-template-columns: 1fr;
   }
-  .specs-grid,
-  .types-grid,
-  .safety-grid,
-  .pipe-detail-card {
+  .signal-pipeline,
+  .visual-specs-grid,
+  .evo-cards-grid,
+  .models-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pipe-spotlight-grid,
+  .interactive-calc-bar,
+  .safety-visual-split,
+  .probe-sim-display {
     grid-template-columns: 1fr;
   }
 }

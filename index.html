@@ -559,421 +559,538 @@
     </aside>
   </main>
 
-  <!-- ==================== 底部：零基础新手知识学院 (工作原理 / 核心指标 / 常见分类 / 主流品牌型号 / 防炸机指南) ==================== -->
-  <section class="academy-section" id="beginnerAcademy" aria-label="Oscilloscope Beginner Academy">
-    <div class="academy-container">
-      <div class="academy-header">
-        <div>
-          <span class="academy-pill" data-i18n="acadBadge">ZERO-TO-ONE BEGINNER ACADEMY · 零基础入门必修课</span>
-          <h2 class="academy-title" data-i18n="acadTitle">示波器工作原理、核心指标与主流型号百科</h2>
-          <p class="academy-subtitle" data-i18n="acadSubtitle">
-            万用表只能告诉你“此时此刻电压平均值是多少”，而示波器是一台“超高速电压摄像机”，能把一秒钟内变化上亿次的电压画成时间曲线。
-          </p>
+  <!-- ==================== 底部：零基础新手知识图鉴 (5页翻页式可视化画册) ==================== -->
+  <section class="academy-section" id="beginnerAcademy" aria-label="Oscilloscope Visual Handbook">
+    <div class="academy-deck">
+
+      <!-- 画册顶栏：标题 + 5页分段导航 + 页码指示 -->
+      <header class="deck-topbar">
+        <div class="deck-title-group">
+          <h2 class="deck-heading" data-i18n="acadTitle">示波器零基础可视化图鉴</h2>
+          <p class="deck-lead">一页看懂一个核心概念 · 支持底部按钮或键盘 ← → 翻页</p>
         </div>
-        <div class="academy-nav-tabs" role="tablist">
-          <button class="acad-tab active" data-acad-tab="principle" data-i18n="acadTab1">1. 内部工作原理 (交互图)</button>
-          <button class="acad-tab" data-acad-tab="specs" data-i18n="acadTab2">2. 四大核心指标 &amp; 选型</button>
-          <button class="acad-tab" data-acad-tab="types" data-i18n="acadTab3">3. 示波器分类与演进</button>
-          <button class="acad-tab" data-acad-tab="models" data-i18n="acadTab4">4. 常用品牌与经典型号</button>
-          <button class="acad-tab" data-acad-tab="safety" data-i18n="acadTab5">5. 探头 1X/10X 与防炸机铁律</button>
+
+        <nav class="deck-chapter-pills" aria-label="Handbook Pages">
+          <button class="chapter-pill active" data-page="0">
+            <span class="cp-idx">01</span>
+            <span>工作原理信号链</span>
+          </button>
+          <button class="chapter-pill" data-page="1">
+            <span class="cp-idx">02</span>
+            <span>四大指标与选型</span>
+          </button>
+          <button class="chapter-pill" data-page="2">
+            <span class="cp-idx">03</span>
+            <span>四类示波器演进</span>
+          </button>
+          <button class="chapter-pill" data-page="3">
+            <span class="cp-idx">04</span>
+            <span>主流品牌与神机</span>
+          </button>
+          <button class="chapter-pill" data-page="4">
+            <span class="cp-idx">05</span>
+            <span>防炸机与10X探头</span>
+          </button>
+        </nav>
+
+        <div class="deck-page-counter">
+          <span id="deckPageNum">1</span> / 5 页
         </div>
+      </header>
+
+      <!-- 画册翻页进度细条 -->
+      <div class="deck-progress-track">
+        <div class="deck-progress-bar" id="deckProgressBar" style="width: 20%"></div>
       </div>
 
-      <!-- ==================== 知识模块 1：示波器内部工作原理（交互式信号链路拆解） ==================== -->
-      <div class="acad-pane active" id="acad-principle">
-        <div class="principle-intro">
-          <h3>🔍 现代数字存储示波器 (DSO) 是怎么把电信号变成屏幕波形的？</h3>
-          <p>请点击下方信号链路中的 <strong>任意 1~6 号硬件模块</strong>，查看它的通俗比喻、内部电路作用，并自动高亮上方示波器面板上的对应旋钮：</p>
-        </div>
-
-        <!-- 6 级信号流向交互框图 -->
-        <div class="signal-pipeline" id="signalPipeline">
-          <button class="pipe-node active" data-pipe="probe" data-link-ctrl="bnc_ch1">
-            <span class="pipe-step">STEP 1</span>
-            <strong>无源/有源探头</strong>
-            <em>Probe (1X / 10X)</em>
-          </button>
-          <span class="pipe-arrow">→</span>
-          <button class="pipe-node" data-pipe="afe" data-link-ctrl="knob_ch1_scale">
-            <span class="pipe-step">STEP 2</span>
-            <strong>模拟前端 (耦合与衰减放大)</strong>
-            <em>AC/DC &amp; Volts/Div</em>
-          </button>
-          <span class="pipe-arrow">→</span>
-          <button class="pipe-node" data-pipe="adc" data-link-ctrl="knob_sec_div">
-            <span class="pipe-step">STEP 3</span>
-            <strong>高速 ADC 模数转换器</strong>
-            <em>Sample Rate (GSa/s)</em>
-          </button>
-          <span class="pipe-arrow">→</span>
-          <button class="pipe-node" data-pipe="trigger" data-link-ctrl="knob_trig_level">
-            <span class="pipe-step">STEP 4</span>
-            <strong>硬件触发比较器 (同步灵魂)</strong>
-            <em>Trigger Level &amp; Slope</em>
-          </button>
-          <span class="pipe-arrow">→</span>
-          <button class="pipe-node" data-pipe="memory" data-link-ctrl="btn_runstop">
-            <span class="pipe-step">STEP 5</span>
-            <strong>高速采集存储器</strong>
-            <em>Memory Depth (Mpts)</em>
-          </button>
-          <span class="pipe-arrow">→</span>
-          <button class="pipe-node" data-pipe="display" data-link-ctrl="btn_persist">
-            <span class="pipe-step">STEP 6</span>
-            <strong>数字荧光处理与屏幕渲染</strong>
-            <em>DSP, Math &amp; Phosphor</em>
-          </button>
-        </div>
-
-        <!-- 当前选中链路节点详解面板 -->
-        <div class="pipe-detail-card" id="pipeDetailCard">
-          <div class="pipe-detail-main">
-            <span class="pipe-badge" id="pipeDetailStep">STEP 1 · 信号入口</span>
-            <h4 id="pipeDetailTitle">1. 示波器探头 (Probe 1X / 10X) —— 高阻抗“听诊器”</h4>
-            <p class="pipe-analogy" id="pipeDetailAnalogy">
-              <strong>💡 通俗比喻：</strong>就像医生听诊器，既要清晰听到被测电路的心跳，又绝对不能因为接上探头而“偷走”电路里的电流导致电路死机（负载效应）。
-            </p>
-            <p class="pipe-explain" id="pipeDetailExplain">
-              <strong>⚙️ 硬件原理：</strong>如果直接拿一根普通铜线连示波器，长导线的分布电容（几十到上百 pF）会把高频信号直接短路掉！标准探头在 <strong>10X 挡</strong> 下内部串联了 9MΩ 电阻与补偿电容，配合示波器 BNC 端口的 1MΩ 输入阻抗，构成了 <strong>10MΩ 极高阻抗 + 约 10pF 极低电容</strong> 的 10:1 分压器，把对被测电路的干扰降到最低。
-            </p>
+      <!-- ==================== PAGE 1 / 5：示波器内部工作原理（SVG 动态信号流） ==================== -->
+      <article class="deck-page active" data-deck-page="0">
+        <div class="page-hero-banner">
+          <div>
+            <h3>万用表看“平均数字”，示波器是每秒连拍10亿张的“高速电压摄像机”</h3>
+            <p>点击下方信号流中的 <strong>1~6 号硬件节点</strong>，查看电信号从探头尖端进入屏幕的每一步变化：</p>
           </div>
-          <div class="pipe-detail-side">
-            <div class="pipe-ctrl-box">
-              <span>对应面板控制旋钮/按键：</span>
-              <strong id="pipeDetailCtrlName">BNC 输入口 &amp; 软键 F3 (探头比 1X/10X)</strong>
-              <button class="btn-secondary" id="btnPipeLocate">在上方示波器上闪烁定位 ↑</button>
+          <button class="btn-locate-up" id="btnPipeLocate">
+            <span>在上方示波器面板闪烁对应旋钮 ↑</span>
+          </button>
+        </div>
+
+        <!-- 交互式 6 节点 SVG 发光流水线 -->
+        <div class="pipeline-stage">
+          <div class="pipe-track-line">
+            <div class="pipe-pulse-dot"></div>
+          </div>
+          <div class="signal-pipeline" id="signalPipeline">
+            <button class="pipe-node active" data-pipe="probe">
+              <div class="pipe-icon-circle">01</div>
+              <strong>无源探头</strong>
+              <em>10MΩ 高阻输入</em>
+            </button>
+            <button class="pipe-node" data-pipe="afe">
+              <div class="pipe-icon-circle">02</div>
+              <strong>模拟前端 AFE</strong>
+              <em>AC隔直 · 衰减放大</em>
+            </button>
+            <button class="pipe-node" data-pipe="adc">
+              <div class="pipe-icon-circle">03</div>
+              <strong>高速 ADC</strong>
+              <em>GSa/s 数字化切片</em>
+            </button>
+            <button class="pipe-node" data-pipe="trigger">
+              <div class="pipe-icon-circle">04</div>
+              <strong>触发比较器</strong>
+              <em>边沿同步锁存</em>
+            </button>
+            <button class="pipe-node" data-pipe="memory">
+              <div class="pipe-icon-circle">05</div>
+              <strong>采集存储器</strong>
+              <em>Mpts 环形缓存</em>
+            </button>
+            <button class="pipe-node" data-pipe="display">
+              <div class="pipe-icon-circle">06</div>
+              <strong>荧光屏渲染</strong>
+              <em>DSP 余晖合成</em>
+            </button>
+          </div>
+        </div>
+
+        <!-- 极简三栏式可视化详情卡（拒绝文字堆砌） -->
+        <div class="pipe-spotlight-grid" id="pipeDetailCard">
+          <div class="spot-col spot-visual">
+            <div class="spot-step-tag" id="pipeDetailStep">STEP 01 · 信号入口</div>
+            <h4 id="pipeDetailTitle">示波器探头 (Probe 1X / 10X)</h4>
+            <div class="spot-ctrl-chip">
+              <span>对应面板控件：</span>
+              <strong id="pipeDetailCtrlName">BNC 接口 &amp; 软键 F3 (探头比)</strong>
             </div>
           </div>
+          <div class="spot-col">
+            <span class="spot-col-label">一句话通俗比喻</span>
+            <p class="spot-text" id="pipeDetailAnalogy">
+              就像医生的听诊器：既要清晰听到电路的电压心跳，又绝不能因为接上探头而“偷走”电流导致电路停振。
+            </p>
+          </div>
+          <div class="spot-col">
+            <span class="spot-col-label">核心硬件原理</span>
+            <p class="spot-text" id="pipeDetailExplain">
+              普通长导线有近 100pF 电容会把高频短路。探头在 10X 挡下构成 10MΩ 高阻抗 + ~10pF 超低电容分压器，保护信号不失真。
+            </p>
+          </div>
         </div>
-      </div>
+      </article>
 
-      <!-- ==================== 知识模块 2：看懂示波器四大核心指标 & 选型计算器 ==================== -->
-      <div class="acad-pane hidden" id="acad-specs">
-        <div class="specs-grid">
-          <div class="spec-card">
-            <div class="spec-head">
-              <span class="spec-num">01</span>
+      <!-- ==================== PAGE 2 / 5：看懂四大核心指标 & 滑动选型计算器 ==================== -->
+      <article class="deck-page hidden" data-deck-page="1">
+        <div class="visual-specs-grid">
+          <!-- 指标 1：带宽 -->
+          <div class="vspec-card">
+            <div class="vspec-top">
               <div>
-                <h4>带宽 (Bandwidth · 单位: MHz / GHz)</h4>
-                <em>决定示波器能“看清多高频率”的第一硬指标</em>
+                <h4>带宽 (Bandwidth)</h4>
+                <span>决定能测多高频率 · 遵循 <strong>5倍法则</strong></span>
               </div>
+              <em class="vspec-unit">MHz / GHz</em>
             </div>
-            <p>
-              <strong>定义：</strong>输入一个正弦波，当频率高到一定程度时，示波器前端模拟电路跟不上了，屏幕上看到的波形幅度会衰减到真实值的 <strong>70.7%（即 -3dB 点）</strong>，这个临界频率就叫示波器带宽。
-            </p>
-            <div class="spec-rule">
-              <strong>📌 著名的“5倍经验法则”：</strong>
-              想要准确测量一个信号（尤其是方波或数字脉冲，它们含有丰富的 3 次、5 次奇次谐波），<strong>示波器带宽至少要是被测信号最高频率的 5 倍！</strong>（例如测 20MHz 的单片机 SPI 时钟方波，买 100MHz 带宽示波器才不会把方波看成正弦波）。
+            <div class="vspec-svg-box">
+              <svg viewBox="0 0 260 64" class="vspec-svg">
+                <!-- 理想方波 vs 带宽不足变圆的正弦化波形 -->
+                <path d="M10,50 L10,14 L65,14 L65,50 L120,50 L120,14 L175,14 L175,50 L240,50" fill="none" stroke="#ffd426" stroke-width="2"/>
+                <path d="M10,50 C28,50 28,22 45,22 C62,22 62,50 92,50 C122,50 122,22 148,22 C175,22 175,50 240,50" fill="none" stroke="#ff3b4e" stroke-width="2" stroke-dasharray="4 3"/>
+                <text x="14" y="28" fill="#ffd426" font-size="10" font-family="JetBrains Mono">✓ 带宽≥5倍信号 (方波锐利)</text>
+                <text x="85" y="42" fill="#ff3b4e" font-size="10" font-family="JetBrains Mono">✗ 带宽不足 (方波变圆衰减)</text>
+              </svg>
             </div>
+            <p>信号在带宽频率处幅度会衰减 30% (-3dB)。<strong>测 20MHz 方波至少需 100MHz 带宽示波器。</strong></p>
           </div>
 
-          <div class="spec-card">
-            <div class="spec-head">
-              <span class="spec-num">02</span>
+          <!-- 指标 2：采样率 -->
+          <div class="vspec-card">
+            <div class="vspec-top">
               <div>
-                <h4>采样率 (Sample Rate · 单位: MSa/s 或 GSa/s)</h4>
-                <em>高速摄像机每秒钟“拍多少张快照”</em>
+                <h4>采样率 (Sample Rate)</h4>
+                <span>每秒钟拍多少张电压快照 · 建议 <strong>≥5倍带宽</strong></span>
               </div>
+              <em class="vspec-unit">GSa/s</em>
             </div>
-            <p>
-              <strong>定义：</strong>`1 GSa/s`（吉采样每秒）代表示波器内部的 ADC 每秒钟对电压采样 <strong>10 亿次</strong>（每隔 1 纳秒抓一个电压点）。
-            </p>
-            <div class="spec-rule">
-              <strong>📌 采样率选型准则：</strong>
-              虽然奈奎斯特采样定理说采样率 > 2 倍信号频率就能还原正弦波，但在工程上为了看清脉冲上升沿和毛刺，<strong>采样率通常需要达到示波器带宽的 4~10 倍</strong>（例如主流 100MHz 示波器标配 1 GSa/s 采样率）。注意：多通道同时开启时，很多示波器的采样率会被平分！
+            <div class="vspec-svg-box">
+              <svg viewBox="0 0 260 64" class="vspec-svg">
+                <path d="M10,32 Q35,5 60,32 T110,32 T160,32 T210,32" fill="none" stroke="rgba(0,229,255,0.35)" stroke-width="2"/>
+                <g fill="#00e5ff">
+                  <circle cx="10" cy="32" r="3"/><circle cx="23" cy="18" r="3"/><circle cx="35" cy="18" r="3"/>
+                  <circle cx="48" cy="22" r="3"/><circle cx="60" cy="32" r="3"/><circle cx="72" cy="44" r="3"/>
+                  <circle cx="85" cy="46" r="3"/><circle cx="98" cy="42" r="3"/><circle cx="110" cy="32" r="3"/>
+                  <circle cx="135" cy="18" r="3"/><circle cx="160" cy="32" r="3"/><circle cx="185" cy="46" r="3"/><circle cx="210" cy="32" r="3"/>
+                </g>
+                <text x="15" y="58" fill="#00e5ff" font-size="10" font-family="JetBrains Mono">1 GSa/s = 每秒采样10亿点 (间隔 1ns)</text>
+              </svg>
             </div>
+            <p>采样点越密集，越能抓到一闪而过的窄毛刺。注意：四通道全开时采样率通常减半或四分。</p>
           </div>
 
-          <div class="spec-card">
-            <div class="spec-head">
-              <span class="spec-num">03</span>
+          <!-- 指标 3：存储深度 -->
+          <div class="vspec-card">
+            <div class="vspec-top">
               <div>
-                <h4>存储深度 (Memory Depth · 单位: kpts / Mpts)</h4>
-                <em>决定了“抓拍一整段长波形之后，放大还能不能看清细节”</em>
+                <h4>存储深度 (Memory Depth)</h4>
+                <span>决定长波形按下 STOP 后<strong>放大能不能看清</strong></span>
               </div>
+              <em class="vspec-unit">Mpts</em>
             </div>
-            <p>
-              <strong>核心公式：</strong><code>存储深度 = 采样率 × 屏幕总采集时间</code>。<br>
-              如果一台示波器存储深度只有可怜的几千点（kpts），当你把时基拧到 `10ms/div` 看一段长通信数据包时，示波器为了不撑爆内存，会被迫<strong>自动降低采样率</strong>，导致高频细节全部丢失！
-            </p>
-            <div class="spec-rule">
-              <strong>📌 现代标准：</strong>目前主流入门台式示波器存储深度普遍在 <strong>10 Mpts ~ 50 Mpts</strong> 以上，即使捕获长波形，按下 STOP 后放大依然丝毫毕现。
+            <div class="vspec-svg-box">
+              <svg viewBox="0 0 260 64" class="vspec-svg">
+                <rect x="12" y="12" width="236" height="18" rx="3" fill="#162032" stroke="#3b82f6"/>
+                <rect x="95" y="12" width="46" height="18" fill="rgba(255,212,38,0.28)" stroke="#ffd426"/>
+                <path d="M95,30 L40,46 M141,30 L210,46" stroke="#ffd426" stroke-dasharray="2 2"/>
+                <path d="M40,54 L55,54 L55,42 L70,42 L70,54 L90,54 L90,42 L115,42 L115,54 L145,54 L145,42 L170,42 L170,54 L210,54" fill="none" stroke="#22e568" stroke-width="1.8"/>
+                <text x="20" y="25" fill="#93c5fd" font-size="10" font-family="JetBrains Mono">50Mpts 全景缓存 → 局部放大百倍仍清晰</text>
+              </svg>
             </div>
+            <p><code>存储深度 = 采样率 × 时间</code>。主流台式机均在 <strong>10Mpts ~ 50Mpts</strong> 以上，彻底告别慢时基掉采样率。</p>
           </div>
 
-          <div class="spec-card">
-            <div class="spec-head">
-              <span class="spec-num">04</span>
+          <!-- 指标 4：8-bit vs 12-bit 分辨率 -->
+          <div class="vspec-card">
+            <div class="vspec-top">
               <div>
-                <h4>ADC 垂直分辨率 (8-bit vs 12-bit HD)</h4>
-                <em>决定了垂直方向能把电压切成多少级台阶</em>
+                <h4>ADC 垂直位数 (8-bit vs 12-bit HD)</h4>
+                <span>把垂直电压切成 256 级还是 <strong>4096 级台阶</strong></span>
               </div>
+              <em class="vspec-unit">12-bit HD</em>
             </div>
-            <p>
-              <strong>8-bit 传统示波器：</strong>垂直方向只有 $2^8 = 256$ 个量化台阶，放大看大信号上的微小纹波时容易看到明显的锯齿台阶。<br>
-              <strong>12-bit 高清示波器 (HD)：</strong>垂直方向拥有 $2^{12} = 4096$ 个量化台阶（细腻度提升 16 倍！），是目前近两年各大厂商全面普及的新一代主流标准。
-            </p>
-            <div class="spec-rule">
-              <strong>📌 选购建议：</strong>如果是 2024~2026 年新购入示波器，强烈优先选择 <strong>12-bit ADC</strong> 的新型号（如普源 DHO800 / 鼎阳 SDS800X HD），价格已与老款 8-bit 持平。
+            <div class="vspec-svg-box">
+              <svg viewBox="0 0 260 64" class="vspec-svg">
+                <!-- 左：8-bit 锯齿台阶；右：12-bit 丝滑曲线 -->
+                <path d="M12,48 L26,48 L26,36 L40,36 L40,22 L56,22 L56,14 L75,14 L75,26 L92,26 L92,42 L112,42" fill="none" stroke="#94a3b8" stroke-width="2"/>
+                <path d="M138,48 C155,48 165,14 190,14 C215,14 225,48 246,48" fill="none" stroke="#22e568" stroke-width="2.4"/>
+                <text x="14" y="59" fill="#94a3b8" font-size="10" font-family="JetBrains Mono">8-bit (256级·放大呈锯齿)</text>
+                <text x="142" y="59" fill="#22e568" font-size="10" font-family="JetBrains Mono">12-bit HD (4096级·细腻16倍)</text>
+              </svg>
             </div>
+            <p>新买示波器强烈首选 <strong>12-bit HD 高清机型</strong>，测量大电压上的毫伏级电源纹波时优势巨大。</p>
           </div>
         </div>
 
-        <!-- 互动小工具：新手选型带宽/采样率计算器 -->
-        <div class="bw-calculator-box">
-          <div class="calc-left">
-            <h4>🧮 新手买示波器：带宽与采样率快速计算器</h4>
-            <p>输入你平时要测量的<strong>最高信号频率</strong>（如单片机晶振、PWM、SPI 时钟），按工业“5倍法则”为你推荐规格：</p>
-          </div>
-          <div class="calc-controls">
-            <label>
-              <span>你要测的最高信号频率：</span>
-              <input type="number" id="calcInputFreq" value="20" min="0.1" max="1000" step="1" />
-              <strong>MHz (兆赫兹)</strong>
-            </label>
-            <div class="calc-results">
-              <div class="calc-res-item">
-                <span>推荐最低带宽 (×5倍法则)</span>
-                <strong id="calcOutBW">≥ 100 MHz</strong>
-              </div>
-              <div class="calc-res-item">
-                <span>推荐实时采样率 (×5倍带宽)</span>
-                <strong id="calcOutSR">≥ 1.0 GSa/s</strong>
-              </div>
-              <div class="calc-res-item">
-                <span>推荐档次参考</span>
-                <strong id="calcOutTier">主流入门级台式机 (¥1500~¥2500)</strong>
-              </div>
+        <!-- 交互式滑块选型计算器 -->
+        <div class="interactive-calc-bar">
+          <div class="icalc-slider-group">
+            <div class="icalc-label-row">
+              <span>🎚️ 拖动滑块选择你要测量的最高信号频率：</span>
+              <strong class="icalc-freq-readout"><span id="calcFreqLabel">20</span> MHz</strong>
+            </div>
+            <input type="range" id="calcInputFreq" min="1" max="200" value="20" step="1" class="icalc-range" />
+            <div class="icalc-ticks">
+              <span>1MHz (音频/传感器)</span>
+              <span>20MHz (单片机SPI/晶振)</span>
+              <span>50MHz (高速时钟)</span>
+              <span>100MHz+ (射频/高速总线)</span>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- ==================== 知识模块 3：示波器演化史与常见分类 ==================== -->
-      <div class="acad-pane hidden" id="acad-types">
-        <div class="types-grid">
-          <div class="type-card">
-            <span class="type-era">第一代 · 经典怀旧</span>
-            <h4>1. 模拟示波器 (CRO - Cathode Ray Oscilloscope)</h4>
-            <p>利用阴极射线显像管（老式大肚子电视机原理），把被测电压直接加在电子束的垂直偏转板上打亮荧光屏。</p>
-            <ul>
-              <li><strong>优点：</strong>真·零死区时间、波形余晖极其自然连续、旋钮响应零延迟。</li>
-              <li><strong>缺点：</strong>体积笨重、<strong>无法按下 STOP 保存单次瞬态波形</strong>、没有自动测量与协议解码，现已基本退出主流实验室（仅二手怀旧或特殊教学使用）。</li>
-            </ul>
-          </div>
-
-          <div class="type-card highlight-type">
-            <span class="type-era">当前绝对主力 · 你正在操作的机型</span>
-            <h4>2. 数字存储 / 数字荧光示波器 (DSO / DPO)</h4>
-            <p>先用高速 ADC 把电压变成数字 `0101` 存入内存，再经 FPGA/DSP 处理后画在液晶屏上，并模拟出模拟示波器的多级亮度余晖（DPO 数字荧光技术）。</p>
-            <ul>
-              <li><strong>优点：</strong>可随时按 `Single` 或 `STOP` 永久冻结波形、支持触发前历史回看（预触发）、一键自动测量几十种参数、支持 FFT 频谱与截图导出。</li>
-              <li><strong>适用：</strong>95% 的高校教学、嵌入式开发、电源维修与硬件工程师日常主力。</li>
-            </ul>
-          </div>
-
-          <div class="type-card">
-            <span class="type-era">嵌入式软硬件联调利器</span>
-            <h4>3. 混合信号示波器 (MSO - Mixed Signal Oscilloscope)</h4>
-            <p>在 2 通道或 4 通道模拟示波器的基础上，额外集成了 <strong>16 路数字逻辑分析仪接口</strong>。</p>
-            <ul>
-              <li><strong>优点：</strong>可以同时观测 4 路模拟电压波形 + 16 路数字 `0/1` 高低电平（如同时抓取并行总线、I2C、SPI、UART、CAN 控制时序）。</li>
-              <li><strong>标识区别：</strong>型号通常以 **MSO** 开头（如 `MSO5074`），而纯模拟通道型号以 **DS / DSO / SDS** 开头。</li>
-            </ul>
-          </div>
-
-          <div class="type-card">
-            <span class="type-era">出差 / 桌面空间有限 / 学生党</span>
-            <h4>4. 便携手持示波器 &amp; USB 虚拟示波器</h4>
-            <p>去掉笨重的台式机外壳，做成万用表大小的充电手持机，或通过 Type-C 连电脑软件显示的无屏小盒子。</p>
-            <ul>
-              <li><strong>优点：</strong>价格亲民（¥200 ~ ¥1200）、电池供电天然隔离（浮地测量更安全）、揣进背包就能去现场调车或修板子。</li>
-              <li><strong>缺点：</strong>缺少独立物理旋钮（盲操不如台式机顺手）、带宽和底噪指标通常弱于同价位台式机。</li>
-            </ul>
+          <div class="icalc-output-pills">
+            <div class="icalc-pill">
+              <span>最低推荐带宽 (×5倍)</span>
+              <strong id="calcOutBW">≥ 100 MHz</strong>
+            </div>
+            <div class="icalc-pill">
+              <span>推荐采样率</span>
+              <strong id="calcOutSR">≥ 1.0 GSa/s</strong>
+            </div>
+            <div class="icalc-pill wide">
+              <span>一步到位推荐机型档次</span>
+              <strong id="calcOutTier">主流 12-bit 入门台式机 (如普源 DHO804 / 鼎阳 SDS804X HD)</strong>
+            </div>
           </div>
         </div>
-      </div>
+      </article>
 
-      <!-- ==================== 知识模块 4：主流品牌与经典常用型号大全 ==================== -->
-      <div class="acad-pane hidden" id="acad-models">
-        <div class="models-intro">
-          <h3>🏆 实验室、高校与工程师最常用的示波器品牌及代表型号</h3>
-          <p>如果你学会了本网页的示波器面板，下面这些国内外真实示波器你上手就能直接用（它们的前面板按键与旋钮逻辑 95% 完全一致）：</p>
-        </div>
-
-        <div class="brand-table-wrap">
-          <table class="brand-table">
-            <thead>
-              <tr>
-                <th>品牌梯队</th>
-                <th>经典/现役爆款型号</th>
-                <th>核心规格</th>
-                <th>参考价位</th>
-                <th>群体口碑与适用场景</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <strong class="brand-name ch1-text">普源精电 (RIGOL)</strong>
-                  <span class="brand-sub">国产示波器龙头 · 高校与工程师保有量第一</span>
-                </td>
-                <td>
-                  <strong>DS1054Z</strong> (一代神机)<br>
-                  <strong>DHO804 / DHO914</strong> (新一代 12-bit 爆款)<br>
-                  <strong>MSO5074</strong> (进阶中端王牌)
-                </td>
-                <td>
-                  50~100MHz · 4通道 · 8-bit<br>
-                  70~125MHz · 4通道 · <strong>12-bit HD</strong> · 触控屏<br>
-                  70~350MHz · 8 GSa/s · 200Mpts
-                </td>
-                <td>
-                  ¥1,800 ~ ¥2,400<br>
-                  ¥1,999 ~ ¥3,600<br>
-                  ¥5,500+
-                </td>
-                <td>
-                  `DS1054Z` 是全球销量最高的入门四通道神机；2024年后新买强烈推荐支持 Type-C 供电 + 12-bit 高清触控屏的 **`DHO804`**。
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong class="brand-name ch2-text">鼎阳科技 (SIGLENT)</strong>
-                  <span class="brand-sub">国产双雄之一 · 模拟前端底噪与 FFT 极佳</span>
-                </td>
-                <td>
-                  <strong>SDS1104X-E</strong> (经典四通道)<br>
-                  <strong>SDS804X HD / SDS1000X HD</strong> (12-bit 新主力)
-                </td>
-                <td>
-                  100MHz · 4通道 · 1 GSa/s · 14Mpts<br>
-                  70~200MHz · 4通道 · <strong>12-bit HD</strong> · 2 GSa/s
-                </td>
-                <td>
-                  ¥2,300 ~ ¥2,800<br>
-                  ¥2,199 ~ ¥3,900
-                </td>
-                <td>
-                  鼎阳在欧美极受欢迎，模拟前端底噪控制、Web 远程控制与 Bode 图（环路响应分析）功能在电源工程师中口碑极佳。
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong class="brand-name" style="color:#ff8c24">是德科技 (Keysight)</strong>
-                  <span class="brand-sub">原安捷伦 Agilent / 惠普 HP · 仪器界标杆</span>
-                </td>
-                <td>
-                  <strong>DSOX1204G / EDUX1052G</strong> (高校教学常客)<br>
-                  <strong>InfiniiVision 3000T / HD3 系列</strong> (大厂研发标配)
-                </td>
-                <td>
-                  50~200MHz · 2/4通道 · 内置信号发生器<br>
-                  100MHz~1GHz · 100万次/秒超高捕获率
-                </td>
-                <td>
-                  ¥4,500 ~ ¥12,000<br>
-                  ¥25,000 ~ ¥100,000+
-                </td>
-                <td>
-                  旋钮手感与响应速度天下第一，死区时间极短，抓偶发毛刺极强，是各大芯片原厂、外企和重点大学实验室的标准配置。
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong class="brand-name" style="color:#38bdf8">泰克 (Tektronix)</strong>
-                  <span class="brand-sub">示波器发明鼻祖 · 70余年行业标准制定者</span>
-                </td>
-                <td>
-                  <strong>TBS1102C / TBS2000B</strong> (大学基础实验室最常见)<br>
-                  <strong>MSO2 / MSO4 / MSO5B 系列</strong> (现代全触控主力)
-                </td>
-                <td>
-                  50~200MHz · 2/4通道 · 经典旋钮布局<br>
-                  200MHz~2GHz · 12-bit · 巨屏触控 UI
-                </td>
-                <td>
-                  ¥3,800 ~ ¥11,000<br>
-                  ¥20,000 ~ ¥150,000+
-                </td>
-                <td>
-                  国内 80% 大学模电/数电实验室的台式机都是泰克 `TDS/TBS` 系列，皮实耐造；高端 `MSO4/5` 的触控交互是行业天花板。
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong class="brand-name" style="color:#a855f7">罗德与施瓦茨 (R&amp;S) / 力科 (Teledyne LeCroy)</strong>
-                  <span class="brand-sub">德系射频霸主 &amp; 美系高速总线分析巨擘</span>
-                </td>
-                <td>
-                  <strong>R&amp;S RTB2004 / MXO4</strong><br>
-                  <strong>LeCroy WaveSurfer / WaveRunner</strong>
-                </td>
-                <td>
-                  10-bit / 12-bit 超低底噪 ADC · 射频级频谱分析<br>
-                  深度数学运算与高速串行协议分析
-                </td>
-                <td>
-                  ¥15,000 ~ ¥200,000+
-                </td>
-                <td>
-                  多见于射频通信研究所、汽车电子（车载以太网/CAN-FD）及高速数字信号完整性（SI）实验室。
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong class="brand-name" style="color:#22e568">高性价比学生党 / 便携机型</strong>
-                  <span class="brand-sub">梦源实验室 / 正点原子 / 麦科信 / 菲尼瑞斯</span>
-                </td>
-                <td>
-                  <strong>梦源 DSCope U3P100</strong> (USB虚拟示波器)<br>
-                  <strong>麦科信 Micsig TO1104</strong> (平板全触控电池供电)<br>
-                  <strong>正点原子 / FNIRSI 便携彩屏机</strong>
-                </td>
-                <td>
-                  50~100MHz · 2/4通道 · 便携/电池或USB供电
-                </td>
-                <td>
-                  ¥300 ~ ¥2,200
-                </td>
-                <td>
-                  适合宿舍桌面空间狭小的学生党、嵌入式单片机看 PWM/UART 波形，或者需要带电池浮地测量的现场工程师。
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ==================== 知识模块 5：新手防炸机安全铁律与探头 1X/10X 黄金法则 ==================== -->
-      <div class="acad-pane hidden" id="acad-safety">
-        <div class="safety-grid">
-          <div class="safety-card danger-card">
-            <div class="safety-tag">⚠️ 铁律一 · 每年都有新手因此烧毁板子甚至炸探头！</div>
-            <h4>为什么示波器探头的“黑色鳄鱼夹（地线）”绝对不能乱夹？</h4>
-            <p>
-              <strong>核心真相：</strong>万用表是电池供电的，它的黑表笔跟大地没有任何关系，你想夹哪就夹哪。但<strong>台式示波器的所有 BNC 外壳、以及所有探头的黑色鳄鱼夹地线，在示波器内部都直接连在三脚电源插头的“安全大地（PE 线）”上！</strong>
-            </p>
-            <ul>
-              <li><strong>❌ 致命错误 1（测 220V 市电/非隔离电源）：</strong>如果你把探头黑色鳄鱼夹夹在 220V 市电火线或整流桥负端上，相当于把市电直接通过鳄鱼夹对大地短路，瞬间火花四溅跳闸炸表！<strong>（测市电或开关电源初级，必须使用高压差分探头！）</strong></li>
-              <li><strong>❌ 致命错误 2（双通道夹不同参考点）：</strong>CH1 的黑色鳄鱼夹和 CH2 的黑色鳄鱼夹在内部是短接在一起的！如果 CH1 地线夹在电路 GND，CH2 地线夹在某电阻的 12V 端想测压降，相当于用探头地线直接把 12V 对 GND 短路！</li>
-            </ul>
+      <!-- ==================== PAGE 3 / 5：四类示波器演进对比图谱 ==================== -->
+      <article class="deck-page hidden" data-deck-page="2">
+        <div class="evo-cards-grid">
+          <!-- 类别 1：CRO -->
+          <div class="evo-card">
+            <div class="evo-svg-header">
+              <svg viewBox="0 0 120 64" class="evo-icon-svg">
+                <rect x="14" y="8" width="92" height="48" rx="6" fill="#161d2a" stroke="#64748b" stroke-width="2"/>
+                <rect x="20" y="14" width="52" height="36" rx="4" fill="#062016" stroke="#22e568" stroke-width="1.5"/>
+                <path d="M24,32 Q36,16 46,32 T68,32" fill="none" stroke="#22e568" stroke-width="2"/>
+                <circle cx="84" cy="22" r="5" fill="#475569"/><circle cx="96" cy="22" r="5" fill="#475569"/>
+                <circle cx="84" cy="38" r="5" fill="#475569"/><circle cx="96" cy="38" r="5" fill="#475569"/>
+              </svg>
+              <span class="evo-badge muted">第一代 · 经典淘汰</span>
+            </div>
+            <h4>模拟示波器 (CRO)</h4>
+            <p>老式显像管电子束直接打亮荧光屏，无数字化内存。</p>
+            <div class="evo-tags">
+              <span class="etag pro">✓ 零延迟真余晖</span>
+              <span class="etag con">✗ 无法按 STOP 存波形</span>
+              <span class="etag con">✗ 笨重无自动测量</span>
+            </div>
           </div>
 
-          <div class="safety-card warning-card">
-            <div class="safety-tag">📌 铁律二 · 探头手柄上的 1X / 10X 开关到底怎么用？</div>
-            <h4>为什么平时 99% 的情况都应该把探头拨在 【10X】 挡？</h4>
-            <p>
-              很多新手以为“1X 不衰减更准，10X 只有测高压才用”——<strong>这是完全错误的观念！</strong>
-            </p>
-            <ul>
-              <li><strong>当探头拨在 1X（直通挡）时：</strong>探头同轴电缆的近 100pF 寄生电容直接并联到被测电路上，<strong>探头带宽会暴跌到只有 6MHz 左右！</strong>测 8MHz 晶振会导致晶振直接停振，测 10MHz 方波会彻底失真成正弦波！</li>
-              <li><strong>当探头拨在 10X（10倍衰减挡）时：</strong>输入阻抗提升 10 倍达到 <strong>10MΩ</strong>，输入电容降至仅 <strong>~10pF</strong>，带宽才能达到满血的 100MHz/200MHz！</li>
-              <li><strong>✅ 正确做法：</strong>平时永远把物理探头拨在 <strong>10X</strong>，同时在示波器屏幕右侧软键菜单（本网页软键 F3）里把【探头比】也设为 <strong>10X</strong>，这样示波器会自动把读数乘回 10 倍，电压读数完全准确！只有在测几毫伏的极微弱低频传感器信号时才切回 1X。</li>
-            </ul>
+          <!-- 类别 2：DSO / DPO -->
+          <div class="evo-card featured">
+            <div class="evo-svg-header">
+              <svg viewBox="0 0 120 64" class="evo-icon-svg">
+                <rect x="10" y="6" width="100" height="52" rx="6" fill="#1c2436" stroke="#ffd426" stroke-width="2"/>
+                <rect x="16" y="12" width="62" height="40" rx="3" fill="#050b14" stroke="#38bdf8" stroke-width="1.2"/>
+                <path d="M20,38 L30,38 L30,18 L44,18 L44,38 L58,38 L58,18 L72,18" fill="none" stroke="#ffd426" stroke-width="2"/>
+                <circle cx="88" cy="20" r="6" fill="#ffd426"/><circle cx="101" cy="20" r="4" fill="#38bdf8"/>
+                <rect x="83" y="34" width="22" height="14" rx="2" fill="#334155"/>
+              </svg>
+              <span class="evo-badge gold">当前绝对主力 · 本网页原型</span>
+            </div>
+            <h4>数字存储/荧光示波器 (DSO/DPO)</h4>
+            <p>高速 ADC 采样存入内存，FPGA 渲染多级荧光余晖与自动参数。</p>
+            <div class="evo-tags">
+              <span class="etag pro">✓ 单次 Single 抓拍瞬态</span>
+              <span class="etag pro">✓ 预触发看历史波形</span>
+              <span class="etag pro">✓ 95% 工程师日常主力</span>
+            </div>
+          </div>
+
+          <!-- 类别 3：MSO -->
+          <div class="evo-card">
+            <div class="evo-svg-header">
+              <svg viewBox="0 0 120 64" class="evo-icon-svg">
+                <rect x="10" y="6" width="100" height="52" rx="6" fill="#161d2a" stroke="#00e5ff" stroke-width="2"/>
+                <rect x="16" y="12" width="62" height="40" rx="3" fill="#050b14"/>
+                <path d="M20,24 Q32,12 44,24 T68,24" fill="none" stroke="#ffd426" stroke-width="1.8"/>
+                <path d="M20,36 L28,36 L28,31 L36,31 L36,36 L50,36 L50,31 L65,31" fill="none" stroke="#00e5ff" stroke-width="1.4"/>
+                <path d="M20,45 L40,45 L40,40 L55,40 L55,45 L72,45" fill="none" stroke="#22e568" stroke-width="1.4"/>
+                <rect x="82" y="42" width="24" height="8" rx="2" fill="#00e5ff"/>
+              </svg>
+              <span class="evo-badge cyan">嵌入式总线联调</span>
+            </div>
+            <h4>混合信号示波器 (MSO)</h4>
+            <p>在 4 路模拟通道下方，额外增加 <strong>16 路数字逻辑分析仪接口</strong>。</p>
+            <div class="evo-tags">
+              <span class="etag pro">✓ 4路模拟 + 16路数字0/1</span>
+              <span class="etag pro">✓ SPI/I2C/CAN 并行解码</span>
+              <span class="etag info">型号以 MSO 开头</span>
+            </div>
+          </div>
+
+          <!-- 类别 4：便携 / USB -->
+          <div class="evo-card">
+            <div class="evo-svg-header">
+              <svg viewBox="0 0 120 64" class="evo-icon-svg">
+                <rect x="26" y="10" width="68" height="44" rx="8" fill="#161d2a" stroke="#a855f7" stroke-width="2"/>
+                <rect x="32" y="16" width="56" height="32" rx="4" fill="#050b14"/>
+                <path d="M36,32 L46,20 L56,42 L66,20 L76,42 L84,32" fill="none" stroke="#a855f7" stroke-width="2"/>
+              </svg>
+              <span class="evo-badge purple">学生宿舍 / 现场出差</span>
+            </div>
+            <h4>平板手持 &amp; USB 虚拟示波器</h4>
+            <p>内置锂电池的全触控平板机，或连电脑显示的 Type-C 采样盒。</p>
+            <div class="evo-tags">
+              <span class="etag pro">✓ ¥300~¥1500 便宜便携</span>
+              <span class="etag pro">✓ 电池供电天然浮地隔离</span>
+              <span class="etag con">✗ 无实体旋钮盲操略慢</span>
+            </div>
           </div>
         </div>
-      </div>
+      </article>
+
+      <!-- ==================== PAGE 4 / 5：主流品牌与经典神机图鉴（可按场景筛选卡片） ==================== -->
+      <article class="deck-page hidden" data-deck-page="3">
+        <div class="models-toolbar">
+          <span>学会本网页后，以下主流真机面板按键 95% 完全通用。按你的场景筛选推荐型号：</span>
+          <div class="model-filter-pills">
+            <button class="mfilter-btn active" data-mfilter="all">全部热门机型 (6)</button>
+            <button class="mfilter-btn" data-mfilter="budget">🔥 ¥2000内个人/学生首选</button>
+            <button class="mfilter-btn" data-mfilter="uni">🎓 大学实验室标配</button>
+            <button class="mfilter-btn" data-mfilter="pro">🏢 大厂研发旗舰</button>
+          </div>
+        </div>
+
+        <div class="models-gallery-grid" id="modelsGalleryGrid">
+          <!-- 卡片 1：普源 DHO804 -->
+          <div class="model-card" data-mcat="budget uni">
+            <div class="mcard-top">
+              <span class="mcard-brand ch1-text">普源精电 RIGOL</span>
+              <span class="mcard-price">¥1,999 ~ ¥2,699</span>
+            </div>
+            <h4>DHO804 / DHO914 <small>(新一代 12-bit 爆款)</small></h4>
+            <div class="mcard-specs">
+              <span>70~125 MHz</span>
+              <span>4 通道</span>
+              <span class="hi">12-bit HD</span>
+              <span>1.25 GSa/s</span>
+              <span>Type-C 供电</span>
+            </div>
+            <p>接替一代传奇神机 <code>DS1054Z</code> 的现象级新作：支持充电宝供电、高清触控屏 + 实体旋钮，目前个人发烧友与年轻工程师入手首选。</p>
+          </div>
+
+          <!-- 卡片 2：鼎阳 SDS804X HD -->
+          <div class="model-card" data-mcat="budget uni">
+            <div class="mcard-top">
+              <span class="mcard-brand ch2-text">鼎阳科技 SIGLENT</span>
+              <span class="mcard-price">¥2,199 ~ ¥3,200</span>
+            </div>
+            <h4>SDS804X HD / SDS1104X-E</h4>
+            <div class="mcard-specs">
+              <span>70~200 MHz</span>
+              <span>4 通道</span>
+              <span class="hi">12-bit HD</span>
+              <span>2 GSa/s</span>
+              <span>70 Mpts</span>
+            </div>
+            <p>国产双雄之一，模拟前端底噪极低，自带高达 2GSa/s 采样率、FFT 频谱与电源环路波特图分析，电源工程师与海外极客口碑极佳。</p>
+          </div>
+
+          <!-- 卡片 3：泰克 TBS1102C / TBS2000B -->
+          <div class="model-card" data-mcat="uni">
+            <div class="mcard-top">
+              <span class="mcard-brand" style="color:#38bdf8">泰克 Tektronix</span>
+              <span class="mcard-price">¥3,800 ~ ¥9,500</span>
+            </div>
+            <h4>TBS1102C / TBS2000B <small>(高校教学机皇)</small></h4>
+            <div class="mcard-specs">
+              <span>50~200 MHz</span>
+              <span>2 / 4 通道</span>
+              <span>1~2 GSa/s</span>
+              <span>5年保修</span>
+            </div>
+            <p>示波器发明鼻祖。国内 80% 大学模电/数电实验室课桌上的那台就是它！每个通道独立垂直旋钮，皮实耐造，教学课件通用度第一。</p>
+          </div>
+
+          <!-- 卡片 4：是德科技 DSOX1204G / 3000T -->
+          <div class="model-card" data-mcat="uni pro">
+            <div class="mcard-top">
+              <span class="mcard-brand" style="color:#ff8c24">是德科技 Keysight</span>
+              <span class="mcard-price">¥4,800 ~ ¥35,000+</span>
+            </div>
+            <h4>DSOX1204G / InfiniiVision 3000T</h4>
+            <div class="mcard-specs">
+              <span>70MHz~1GHz</span>
+              <span>4 通道</span>
+              <span class="hi">100万次/秒捕获</span>
+              <span>内置信号源</span>
+            </div>
+            <p>原安捷伦/惠普仪器部门。旋钮丝滑零延迟，百万级波形捕获率抓偶发毛刺天下第一，外企芯片原厂与重点实验室主力标杆。</p>
+          </div>
+
+          <!-- 卡片 5：罗德与施瓦茨 / 泰克 MSO4 -->
+          <div class="model-card" data-mcat="pro">
+            <div class="mcard-top">
+              <span class="mcard-brand" style="color:#a855f7">R&amp;S 罗德与施瓦茨 / Tek MSO4</span>
+              <span class="mcard-price">¥18,000 ~ ¥120,000+</span>
+            </div>
+            <h4>R&amp;S MXO4 / Tektronix MSO4B</h4>
+            <div class="mcard-specs">
+              <span>200MHz~1.5GHz</span>
+              <span class="hi">12~18 bit</span>
+              <span>450万次/秒</span>
+              <span>13.3寸巨屏</span>
+            </div>
+            <p>现代高端实验室旗舰：全触控巨屏分区拖拽 UI、射频级超低底噪与高速汽车以太网/DDR 信号完整性分析天花板。</p>
+          </div>
+
+          <!-- 卡片 6：梦源 / 麦科信 / 正点原子便携派 -->
+          <div class="model-card" data-mcat="budget">
+            <div class="mcard-top">
+              <span class="mcard-brand" style="color:#22e568">便携/学生宿舍派 (梦源/麦科信)</span>
+              <span class="mcard-price">¥350 ~ ¥1,600</span>
+            </div>
+            <h4>梦源 DSCope U3P100 / 麦科信平板</h4>
+            <div class="mcard-specs">
+              <span>50~100 MHz</span>
+              <span>2 / 4 通道</span>
+              <span class="hi">USB / 电池浮地</span>
+              <span>口袋体积</span>
+            </div>
+            <p>适合宿舍桌面放不下台式机的学生党看 STM32 单片机 PWM/I2C/UART 波形，或需要电池供电天然隔离的现场维修工程师。</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ==================== PAGE 5 / 5：防炸机红绿电路图解 & 1X/10X 探头拨杆模拟器 ==================== -->
+      <article class="deck-page hidden" data-deck-page="4">
+        <div class="safety-visual-split">
+          <!-- 左：探头鳄鱼夹接地防炸机 SVG 图解 -->
+          <div class="safety-box danger-theme">
+            <div class="sbox-head">
+              <span class="sbox-pill red">⚠️ 防炸机第一铁律</span>
+              <h4>台式示波器的“黑色鳄鱼夹”直接连着三脚插头的大地 (PE)！</h4>
+            </div>
+
+            <!-- 直观正误对比 SVG 电路图 -->
+            <div class="sbox-svg-stage">
+              <svg viewBox="0 0 460 120" class="safety-svg">
+                <!-- 左侧示波器与大地连接 -->
+                <rect x="12" y="18" width="96" height="58" rx="6" fill="#1c2434" stroke="#94a3b8" stroke-width="1.5"/>
+                <text x="26" y="42" fill="#fff" font-size="11" font-weight="bold">台式示波器</text>
+                <circle cx="92" cy="60" r="6" fill="#0f172a" stroke="#ffd426" stroke-width="2"/>
+                <text x="26" y="62" fill="#94a3b8" font-size="9">BNC金属外圈</text>
+                <!-- 内部直连大地线 -->
+                <path d="M92,66 L92,98 L50,98" fill="none" stroke="#22e568" stroke-width="2"/>
+                <path d="M36,98 L64,98 M41,103 L59,103 M46,108 L54,108" stroke="#22e568" stroke-width="2"/>
+                <text x="68" y="108" fill="#22e568" font-size="10" font-family="JetBrains Mono">三脚插头安全大地 (0V PE)</text>
+
+                <!-- 探头黑夹子延伸线 -->
+                <path d="M98,60 L215,60" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="4 3"/>
+                <text x="115" y="52" fill="#fca5a5" font-size="10">探头黑鳄鱼夹 (=直接连大地!)</text>
+
+                <!-- 右上：错误接非隔离火线/高压端炸机 -->
+                <rect x="220" y="10" width="225" height="44" rx="6" fill="rgba(255,59,78,0.14)" stroke="#ff3b4e"/>
+                <text x="232" y="29" fill="#ff3b4e" font-size="11" font-weight="bold">❌ 错误：黑夹子夹 220V市电 或 12V端</text>
+                <text x="232" y="45" fill="#fecdd3" font-size="10">后果：相当于把火线/电源直接对大地短路 → 炸探头跳闸！</text>
+
+                <!-- 右下：正确接参考地 GND -->
+                <rect x="220" y="66" width="225" height="44" rx="6" fill="rgba(34,229,104,0.12)" stroke="#22e568"/>
+                <text x="232" y="85" fill="#22e568" font-size="11" font-weight="bold">✅ 正确：所有通道黑夹子只夹公共 GND</text>
+                <text x="232" y="101" fill="#bbf7d0" font-size="10">测市电或非共地两点压降：必须用差分探头或 CH1-CH2 运算</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- 右：1X vs 10X 探头拨杆交互模拟器 -->
+          <div class="safety-box gold-theme">
+            <div class="sbox-head">
+              <span class="sbox-pill gold">📌 探头黄金法则 · 点击下方开关亲自对比</span>
+              <h4>为什么平时 99% 的情况探头手柄都要拨在 【10X】 挡？</h4>
+            </div>
+
+            <div class="probe-sim-widget">
+              <div class="probe-switch-bar">
+                <span>模拟测试：测量 <strong>10 MHz 单片机时钟方波</strong>，点击切换探头手柄挡位：</span>
+                <div class="probe-rocker" id="probeSimRocker">
+                  <button class="procker-btn" data-psim="1x">拨到 1X 挡 (直通)</button>
+                  <button class="procker-btn active" data-psim="10x">拨到 10X 挡 (推荐标准)</button>
+                </div>
+              </div>
+
+              <div class="probe-sim-display">
+                <svg viewBox="0 0 240 76" class="psim-svg">
+                  <rect x="2" y="2" width="236" height="72" rx="6" fill="#050b14" stroke="#28354e"/>
+                  <!-- 10X 锐利方波 / 1X 畸变正弦波由 JS 切换 -->
+                  <path id="psimWavePath" d="M16,56 L16,18 L56,18 L56,56 L96,56 L96,18 L136,18 L136,56 L176,56 L176,18 L216,18 L216,56" fill="none" stroke="#22e568" stroke-width="2.4"/>
+                  <text id="psimWaveLabel" x="16" y="70" fill="#22e568" font-size="10" font-family="JetBrains Mono">10X 挡：带宽满血 100MHz+，方波边缘锐利真实</text>
+                </svg>
+
+                <div class="psim-stats" id="psimStatsBox">
+                  <div class="pstat-row"><span>可用带宽上限：</span><strong class="ok" id="psimBwVal">100 ~ 200 MHz (满血)</strong></div>
+                  <div class="pstat-row"><span>输入阻抗 / 寄生电容：</span><strong id="psimImpVal">10 MΩ // ~10 pF (极轻负载)</strong></div>
+                  <div class="pstat-row"><span>对被测电路影响：</span><strong id="psimEffectVal">几乎无干扰，测晶振不会停振</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 画册底部翻页控制栏 -->
+      <footer class="deck-footer">
+        <button class="deck-nav-btn" id="btnDeckPrev">← 上一页</button>
+        <div class="deck-dots" id="deckDots">
+          <button class="ddot active" data-page="0" aria-label="Page 1"></button>
+          <button class="ddot" data-page="1" aria-label="Page 2"></button>
+          <button class="ddot" data-page="2" aria-label="Page 3"></button>
+          <button class="ddot" data-page="3" aria-label="Page 4"></button>
+          <button class="ddot" data-page="4" aria-label="Page 5"></button>
+        </div>
+        <button class="deck-nav-btn primary" id="btnDeckNext">下一页：四大核心指标 →</button>
+      </footer>
 
     </div>
   </section>
