@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSO-2000X 数字存储示波器交互教学系统 | Interactive Oscilloscope Trainer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 顶部全局工具栏与信号源控制台 -->
+  <header class="top-bar">
+    <div class="brand-group">
+      <div class="brand-badge">DSO-2000X</div>
+      <div class="brand-titles">
+        <h1 class="app-title" data-i18n="appTitle">数字示波器交互实训台</h1>
+        <span class="app-subtitle" data-i18n="appSubtitle">100 MHz · 1 GSa/s · 双通道数字荧光教学系统</span>
+      </div>
+    </div>
+
+    <!-- 模拟信号发生器（被测信号源） -->
+    <div class="signal-generator-bar" id="signalGenBar">
+      <div class="sig-bar-header">
+        <span class="sig-dot"></span>
+        <span class="sig-bar-title" data-i18n="sigGenTitle">被测信号源 (Signal Input)</span>
+        <div class="preset-group">
+          <button class="preset-btn active" data-preset="cal" data-ctrl-id="preset_cal">
+            <span data-i18n="presetCal">1kHz 校准方波</span>
+          </button>
+          <button class="preset-btn" data-preset="sine50" data-ctrl-id="preset_sine">
+            <span data-i18n="presetSine">工频/音频正弦</span>
+          </button>
+          <button class="preset-btn" data-preset="ripple" data-ctrl-id="preset_ripple">
+            <span data-i18n="presetRipple">5V电源+纹波(测AC耦合)</span>
+          </button>
+          <button class="preset-btn" data-preset="lissajous" data-ctrl-id="preset_xy">
+            <span data-i18n="presetXY">双通道相位差(X-Y)</span>
+          </button>
+          <button class="preset-btn" data-preset="glitch" data-ctrl-id="preset_pulse">
+            <span data-i18n="presetPulse">脉冲序列(测触发)</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="sig-channels-inline">
+        <!-- CH1 输入配置 -->
+        <div class="sig-ch-box ch1-theme">
+          <span class="sig-ch-tag">CH1 IN</span>
+          <select id="sig1Wave" class="sig-select" title="CH1 Waveform">
+            <option value="square" data-i18n="waveSquare">方波 Square</option>
+            <option value="sine" data-i18n="waveSine">正弦 Sine</option>
+            <option value="triangle" data-i18n="waveTriangle">三角波 Tri</option>
+            <option value="sawtooth" data-i18n="waveSaw">锯齿波 Saw</option>
+            <option value="dc_ripple" data-i18n="waveRipple">5V直流+纹波</option>
+            <option value="pulse" data-i18n="wavePulse">窄脉冲 Pulse</option>
+            <option value="am" data-i18n="waveAM">调幅波 AM</option>
+          </select>
+          <label class="sig-param">
+            <span data-i18n="lblFreq">频率</span>
+            <input type="number" id="sig1Freq" value="1000" min="10" max="50000" step="50" />
+            <em>Hz</em>
+          </label>
+          <label class="sig-param">
+            <span data-i18n="lblAmp">峰峰值</span>
+            <input type="number" id="sig1Amp" value="3.3" min="0.1" max="20" step="0.1" />
+            <em>Vpp</em>
+          </label>
+          <label class="sig-param">
+            <span data-i18n="lblOffset">直流偏置</span>
+            <input type="number" id="sig1Offset" value="1.65" min="-10" max="10" step="0.05" />
+            <em>V</em>
+          </label>
+        </div>
+
+        <!-- CH2 输入配置 -->
+        <div class="sig-ch-box ch2-theme">
+          <span class="sig-ch-tag">CH2 IN</span>
+          <select id="sig2Wave" class="sig-select" title="CH2 Waveform">
+            <option value="sine" data-i18n="waveSine">正弦 Sine</option>
+            <option value="square" data-i18n="waveSquare">方波 Square</option>
+            <option value="triangle" data-i18n="waveTriangle">三角波 Tri</option>
+            <option value="sawtooth" data-i18n="waveSaw">锯齿波 Saw</option>
+            <option value="noisy_sine" data-i18n="waveNoisy">含噪正弦波</option>
+          </select>
+          <label class="sig-param">
+            <span data-i18n="lblFreq">频率</span>
+            <input type="number" id="sig2Freq" value="1000" min="10" max="50000" step="50" />
+            <em>Hz</em>
+          </label>
+          <label class="sig-param">
+            <span data-i18n="lblAmp">峰峰值</span>
+            <input type="number" id="sig2Amp" value="2.0" min="0.1" max="20" step="0.1" />
+            <em>Vpp</em>
+          </label>
+          <label class="sig-param">
+            <span data-i18n="lblPhase">相位差</span>
+            <input type="number" id="sig2Phase" value="90" min="0" max="360" step="15" />
+            <em>°</em>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 语言切换与教学辅助开关 -->
+    <div class="top-actions">
+      <div class="lang-switcher" role="group" aria-label="Language Switcher">
+        <button class="lang-btn active" data-lang="zh" title="面板按键显示中文">中文面板</button>
+        <button class="lang-btn" data-lang="en" title="Standard English Panel Labels">EN Panel</button>
+        <button class="lang-btn" data-lang="bi" title="中英双语对照面板">中/EN 双语</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主工作区：左侧/中央为高仿真示波器本体，右侧为交互式教学与按键百科面板 -->
+  <main class="workspace">
+    <!-- ==================== 示波器前面板机箱 ==================== -->
+    <section class="scope-chassis" aria-label="Oscilloscope Front Panel">
+      <div class="chassis-inner">
+
+        <!-- 左侧：显示屏 + 屏幕右侧菜单软键 + 底部探头接口 -->
+        <div class="display-bay">
+          <div class="bezel-frame">
+            <!-- 屏幕顶部状态信息栏 -->
+            <div class="osd-top-bar">
+              <div class="osd-left">
+                <span class="osd-brand">RIGOL/KEYSIGHT EDU</span>
+                <span class="osd-acq-status run" id="osdRunState">TD</span>
+                <span class="osd-timebase" id="osdTimebase">H: 200 us/div</span>
+                <span class="osd-hpos" id="osdHPos">D: 0.00 s</span>
+              </div>
+              <div class="osd-center">
+                <span class="osd-sample-rate" id="osdSampleRate">1.00 GSa/s · 12.0k pts</span>
+              </div>
+              <div class="osd-right">
+                <span class="osd-trig-badge" id="osdTrigInfo">
+                  <em class="trig-src-dot ch1" id="osdTrigSrcDot">T</em>
+                  <span id="osdTrigSlope">↑</span>
+                  <span id="osdTrigLevel">1.65 V</span>
+                  <span class="osd-trig-mode" id="osdTrigMode">AUTO</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- 屏幕主显示区：波形 Canvas + 右侧屏幕内联菜单栏 -->
+            <div class="screen-viewport">
+              <canvas id="scopeCanvas" width="800" height="480"></canvas>
+
+              <!-- 屏幕内右侧软键菜单条 (OSD Softkey Menu) -->
+              <div class="osd-softmenu" id="osdSoftMenu">
+                <div class="osd-menu-title" id="osdMenuTitle">CH1</div>
+                <div class="osd-menu-item" id="softItem0">
+                  <span class="soft-lbl" data-i18n="softCoupling">耦合</span>
+                  <strong class="soft-val" id="softVal0">DC</strong>
+                </div>
+                <div class="osd-menu-item" id="softItem1">
+                  <span class="soft-lbl" data-i18n="softBWLimit">带宽限制</span>
+                  <strong class="soft-val" id="softVal1">OFF</strong>
+                </div>
+                <div class="osd-menu-item" id="softItem2">
+                  <span class="soft-lbl" data-i18n="softProbe">探头比</span>
+                  <strong class="soft-val" id="softVal2">1X</strong>
+                </div>
+                <div class="osd-menu-item" id="softItem3">
+                  <span class="soft-lbl" data-i18n="softInvert">反相</span>
+                  <strong class="soft-val" id="softVal3">OFF</strong>
+                </div>
+                <div class="osd-menu-item" id="softItem4">
+                  <span class="soft-lbl" data-i18n="softUnit">单位</span>
+                  <strong class="soft-val" id="softVal4">V</strong>
+                </div>
+              </div>
+
+              <!-- 光标测量浮动信息窗 -->
+              <div class="osd-cursor-box hidden" id="osdCursorBox">
+                <div class="cursor-box-title" data-i18n="cursorBoxTitle">光标测量 (Cursors)</div>
+                <div class="cursor-row"><span>AX (T1):</span> <strong id="curValT1">-200 us</strong></div>
+                <div class="cursor-row"><span>BX (T2):</span> <strong id="curValT2">+200 us</strong></div>
+                <div class="cursor-row highlight"><span>ΔX (ΔT):</span> <strong id="curValDT">400 us</strong></div>
+                <div class="cursor-row highlight"><span>1/ΔX:</span> <strong id="curValFreq">2.50 kHz</strong></div>
+                <div class="cursor-row"><span>AY / BY:</span> <strong id="curValY">1.65V / -1.65V</strong></div>
+                <div class="cursor-row highlight"><span>ΔY (ΔV):</span> <strong id="curValDV">3.30 V</strong></div>
+                <div class="cursor-hint" data-i18n="cursorDragHint">提示：可直接在屏幕上拖动虚线光标</div>
+              </div>
+            </div>
+
+            <!-- 屏幕底部自动测量栏 + 通道挡位信息栏 -->
+            <div class="osd-bottom-area">
+              <div class="osd-meas-strip" id="osdMeasStrip">
+                <!-- 动态渲染实时测量参数 Vpp, Freq, Period, Vmax, Vmin, Vavg, Duty -->
+              </div>
+              <div class="osd-channel-strip">
+                <div class="osd-ch-badge ch1 active" id="osdCh1Badge">
+                  <span class="ch-tag">1</span>
+                  <span class="ch-scale" id="osdCh1Scale">1.00 V/div</span>
+                  <span class="ch-cpl" id="osdCh1Cpl">DC</span>
+                  <span class="ch-prb" id="osdCh1Prb">1X</span>
+                  <span class="ch-off" id="osdCh1Off">+0.00V</span>
+                </div>
+                <div class="osd-ch-badge ch2" id="osdCh2Badge">
+                  <span class="ch-tag">2</span>
+                  <span class="ch-scale" id="osdCh2Scale">1.00 V/div</span>
+                  <span class="ch-cpl" id="osdCh2Cpl">DC</span>
+                  <span class="ch-prb" id="osdCh2Prb">1X</span>
+                  <span class="ch-off" id="osdCh2Off">+0.00V</span>
+                </div>
+                <div class="osd-ch-badge math" id="osdMathBadge">
+                  <span class="ch-tag">M</span>
+                  <span class="ch-scale" id="osdMathMode">OFF</span>
+                </div>
+                <div class="osd-xy-badge hidden" id="osdXYBadge">X-Y MODE (CH1=X, CH2=Y)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 屏幕右侧实体软键列 (F1 - F5) -->
+          <div class="softkey-column">
+            <button class="hw-softkey" data-softkey="0" data-ctrl-id="softkey_f1" title="F1">
+              <span class="sk-led"></span>
+            </button>
+            <button class="hw-softkey" data-softkey="1" data-ctrl-id="softkey_f2" title="F2">
+              <span class="sk-led"></span>
+            </button>
+            <button class="hw-softkey" data-softkey="2" data-ctrl-id="softkey_f3" title="F3">
+              <span class="sk-led"></span>
+            </button>
+            <button class="hw-softkey" data-softkey="3" data-ctrl-id="softkey_f4" title="F4">
+              <span class="sk-led"></span>
+            </button>
+            <button class="hw-softkey" data-softkey="4" data-ctrl-id="softkey_f5" title="F5">
+              <span class="sk-led"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 右侧：真实物理旋钮与按键面板区 -->
+        <div class="control-panel">
+
+          <!-- 1. 顶部通用系统控制区 (System / Run Control / Measure) -->
+          <div class="panel-section system-section">
+            <div class="section-header">
+              <span class="sec-title" data-panel-zh="系统与运行控制" data-panel-en="RUN &amp; MEASURE">系统与运行控制</span>
+            </div>
+            <div class="sys-btn-grid">
+              <button class="hw-btn btn-auto" id="btnAutoScale" data-ctrl-id="btn_auto">
+                <span class="btn-main-lbl" data-panel-zh="自动设置" data-panel-en="Auto Scale">自动设置</span>
+              </button>
+              <button class="hw-btn btn-run lit-green" id="btnRunStop" data-ctrl-id="btn_runstop">
+                <span class="btn-main-lbl" data-panel-zh="运行/停止" data-panel-en="Run / Stop">运行/停止</span>
+              </button>
+              <button class="hw-btn btn-single" id="btnSingle" data-ctrl-id="btn_single">
+                <span class="btn-main-lbl" data-panel-zh="单次捕获" data-panel-en="Single">单次捕获</span>
+              </button>
+              <button class="hw-btn" id="btnDefault" data-ctrl-id="btn_default">
+                <span class="btn-main-lbl" data-panel-zh="出厂默认" data-panel-en="Default">出厂默认</span>
+              </button>
+              <button class="hw-btn active-amber" id="btnMeasure" data-ctrl-id="btn_measure">
+                <span class="btn-main-lbl" data-panel-zh="自动测量" data-panel-en="Measure">自动测量</span>
+              </button>
+              <button class="hw-btn" id="btnCursor" data-ctrl-id="btn_cursor">
+                <span class="btn-main-lbl" data-panel-zh="光标测量" data-panel-en="Cursors">光标测量</span>
+              </button>
+              <button class="hw-btn" id="btnAcquire" data-ctrl-id="btn_persist">
+                <span class="btn-main-lbl" data-panel-zh="余晖/采集" data-panel-en="Persist">余晖/采集</span>
+              </button>
+              <button class="hw-btn" id="btnDisplayXY" data-ctrl-id="btn_xy">
+                <span class="btn-main-lbl" data-panel-zh="X-Y 模式" data-panel-en="X-Y Mode">X-Y 模式</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. 水平控制区 (HORIZONTAL) & 触发控制区 (TRIGGER) 并排 -->
+          <div class="panel-row-split">
+            <!-- 水平控制区 HORIZONTAL -->
+            <div class="panel-section horizontal-section">
+              <div class="section-header">
+                <span class="sec-title" data-panel-zh="水平控制 (时基)" data-panel-en="HORIZONTAL">水平控制 (时基)</span>
+              </div>
+              <div class="horiz-controls">
+                <!-- 水平时基大旋钮 Sec/Div -->
+                <div class="knob-unit large-unit" data-ctrl-id="knob_sec_div">
+                  <div class="rotary-knob large-knob" id="knobTimebase" data-knob="timebase" tabindex="0">
+                    <div class="knob-cap">
+                      <div class="knob-indicator"></div>
+                    </div>
+                  </div>
+                  <div class="knob-label">
+                    <span class="lbl-primary" data-panel-zh="秒/格 (时基)" data-panel-en="Sec / Div">秒/格 (时基)</span>
+                    <span class="lbl-val" id="valTimebase">200 μs</span>
+                  </div>
+                </div>
+
+                <!-- 水平位移小旋钮 Position -->
+                <div class="knob-unit small-unit" data-ctrl-id="knob_h_pos">
+                  <div class="rotary-knob small-knob" id="knobHPos" data-knob="hpos" tabindex="0">
+                    <div class="knob-cap">
+                      <div class="knob-indicator"></div>
+                    </div>
+                  </div>
+                  <div class="knob-label">
+                    <span class="lbl-primary" data-panel-zh="水平位移" data-panel-en="Position">水平位移</span>
+                    <button class="push-zero-btn" id="btnHPosZero" data-ctrl-id="btn_hpos_zero" title="Push to Zero">
+                      <span data-panel-zh="按压归零" data-panel-en="Push: Zero">按压归零</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 触发控制区 TRIGGER -->
+            <div class="panel-section trigger-section">
+              <div class="section-header">
+                <span class="sec-title" data-panel-zh="触发控制" data-panel-en="TRIGGER">触发控制</span>
+                <span class="trig-led-badge" id="trigLedBadge">TRIG'D</span>
+              </div>
+              <div class="trig-layout">
+                <!-- 触发电平旋钮 -->
+                <div class="knob-unit small-unit" data-ctrl-id="knob_trig_level">
+                  <div class="rotary-knob medium-knob trig-accent" id="knobTrigLevel" data-knob="triglevel" tabindex="0">
+                    <div class="knob-cap">
+                      <div class="knob-indicator"></div>
+                    </div>
+                  </div>
+                  <div class="knob-label">
+                    <span class="lbl-primary" data-panel-zh="触发电平" data-panel-en="Level">触发电平</span>
+                    <button class="push-zero-btn" id="btnTrig50" data-ctrl-id="btn_trig_50">
+                      <span data-panel-zh="按压 50%" data-panel-en="Push: 50%">按压 50%</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 触发功能按键组 -->
+                <div class="trig-btns">
+                  <button class="hw-btn mini-btn" id="btnTrigMode" data-ctrl-id="btn_trig_mode">
+                    <span class="btn-main-lbl" data-panel-zh="触发方式" data-panel-en="Mode">触发方式</span>
+                    <em class="btn-sub-state" id="lblTrigModeState">AUTO</em>
+                  </button>
+                  <button class="hw-btn mini-btn" id="btnTrigSlope" data-ctrl-id="btn_trig_slope">
+                    <span class="btn-main-lbl" data-panel-zh="触发边沿" data-panel-en="Slope">触发边沿</span>
+                    <em class="btn-sub-state" id="lblTrigSlopeState">↑ Rising</em>
+                  </button>
+                  <button class="hw-btn mini-btn" id="btnTrigSource" data-ctrl-id="btn_trig_src">
+                    <span class="btn-main-lbl" data-panel-zh="触发源" data-panel-en="Source">触发源</span>
+                    <em class="btn-sub-state ch1-text" id="lblTrigSrcState">CH1</em>
+                  </button>
+                  <button class="hw-btn mini-btn" id="btnTrigForce" data-ctrl-id="btn_trig_force">
+                    <span class="btn-main-lbl" data-panel-zh="强制触发" data-panel-en="Force">强制触发</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. 垂直控制区 (VERTICAL: CH1 / MATH / CH2) -->
+          <div class="panel-section vertical-section">
+            <div class="section-header">
+              <span class="sec-title" data-panel-zh="垂直控制 (通道与电压挡位)" data-panel-en="VERTICAL">垂直控制 (通道与电压挡位)</span>
+              <span class="sec-hint" data-i18n="knobOpHint">滚轮/上下拖拽调节旋钮 · 双击归零</span>
+            </div>
+
+            <div class="vertical-columns">
+              <!-- CH1 垂直控制列 -->
+              <div class="vert-col ch1-col">
+                <div class="knob-unit small-unit" data-ctrl-id="knob_ch1_pos">
+                  <div class="rotary-knob small-knob ch1-accent" id="knobCh1Pos" data-knob="ch1pos" tabindex="0">
+                    <div class="knob-cap">
+                      <div class="knob-indicator"></div>
+                    </div>
+                  </div>
+                  <div class="knob-label">
+                    <span class="lbl-primary" data-panel-zh="垂直位移 1" data-panel-en="Position 1">垂直位移 1</span>
+                    <button class="push-zero-btn" id="btnCh1PosZero" data-ctrl-id="btn_ch1_zero">
+                      <span data-panel-zh="归零" data-panel-en="Zero">归零</span>
+                    </button>
+                  </div>
+                </div>
+
+                <button class="hw-btn ch-toggle-btn ch1-lit" id="btnCh1Toggle" data-ctrl-id="btn_ch1">
+                  <span class="ch-num">CH 1</span>
+                  <span class="ch-sub" data-panel-zh="通道 1 / 菜单" data-panel-en="Channel 1">通道 1 / 菜单</span>
+                </button>
+
+                <div class="knob-unit large-unit" data-ctrl-id="knob_ch1_scale">
+                  <div class="rotary-knob large-knob ch1-accent" id="knobCh1Scale" data-knob="ch1scale" tabindex="0">
+                    <div class="knob-cap">
+                      <div class="knob-indicator"></div>
+                    </div>
+                  </div>
+                  <div class="knob-label">
+                    <span class="lbl-primary" data-panel-zh="伏/格 (CH1)" data-panel-en="Volts / Div">伏/格 (CH1)</span>
+                    <span class="lbl-val ch1-text" id="valCh1Scale">1.00 V</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 中央 MATH 与快捷通道配置列 -->
+              <div class="vert-col center-math-col">
+                <button class="hw-btn math-btn" id="btnMathToggle" data-ctrl-id="btn_math">
+                  <span class="btn-main-lbl" data-panel-zh="数学运算" data-panel-en="Math">数学运算</span>
+                  <em class="btn-sub-state" id="lblMathState">OFF</em>
+                </button>
+                <button class="hw-btn" id="btnCh1Coupling" data-ctrl-id="btn_ch1_coupling">
+                  <span class="btn-main-lbl" data-panel-zh="CH1 耦合" data-panel-en="CH1 Coupling">CH1 耦合</span>
+                  <em class="btn-sub-state" id="lblCh1CplBtn">DC</em>
+                </button>
+                <button class="hw-btn" id="btnCh2Coupling" data-ctrl-id="btn_ch2_coupling">
+                  <span class="btn-main-lbl" data-panel-zh="CH2 耦合" data-panel-en="CH2 Coupling">CH2 耦合</span>
+                  <em class="btn-sub-state" id="lblCh2CplBtn">DC</em>
+                </button>
+                <button class="hw-btn" id="btnProbeComp" data-ctrl-id="bnc_cal">
+                  <span class="btn-main-lbl" data-panel-zh="接入1kHz校准端" data-panel-en="Probe Comp">接入1kHz校准端</span>
+                </button>
+              </div>
+
+              <!-- CH2 垂直控制列 -->
+              <div class="vert-col ch2-col">
+                <div class="knob-unit small-unit" data-ctrl-id="knob_ch2_pos">
+                  <div class="rotary-knob small-knob ch2-accent" id="knobCh2Pos" data-knob="ch2pos" tabindex="0">
+                    <div class="knob-cap">
+                      <div class="knob-indicator"></div>
+                    </div>
+                  </div>
+                  <div class="knob-label">
+                    <span class="lbl-primary" data-panel-zh="垂直位移 2" data-panel-en="Position 2">垂直位移 2</span>
+                    <button class="push-zero-btn" id="btnCh2PosZero" data-ctrl-id="btn_ch2_zero">
+                      <span data-panel-zh="归零" data-panel-en="Zero">归零</span>
+                    </button>
+                  </div>
+                </div>
+
+                <button class="hw-btn ch-toggle-btn" id="btnCh2Toggle" data-ctrl-id="btn_ch2">
+                  <span class="ch-num">CH 2</span>
+                  <span class="ch-sub" data-panel-zh="通道 2 / 菜单" data-panel-en="Channel 2">通道 2 / 菜单</span>
+                </button>
+
+                <div class="knob-unit large-unit" data-ctrl-id="knob_ch2_scale">
+                  <div class="rotary-knob large-knob ch2-accent" id="knobCh2Scale" data-knob="ch2scale" tabindex="0">
+                    <div class="knob-cap">
+                      <div class="knob-indicator"></div>
+                    </div>
+                  </div>
+                  <div class="knob-label">
+                    <span class="lbl-primary" data-panel-zh="伏/格 (CH2)" data-panel-en="Volts / Div">伏/格 (CH2)</span>
+                    <span class="lbl-val ch2-text" id="valCh2Scale">1.00 V</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 底部物理 BNC 接口与探头补偿环仿真 -->
+            <div class="bnc-bay">
+              <div class="bnc-port ch1-bnc active" id="bncCh1" data-ctrl-id="bnc_ch1">
+                <div class="bnc-ring"><div class="bnc-core"></div></div>
+                <div class="bnc-meta">
+                  <strong>CH 1</strong>
+                  <span>1MΩ // 15pF 300Vrms CAT I</span>
+                </div>
+              </div>
+              <div class="bnc-port ch2-bnc" id="bncCh2" data-ctrl-id="bnc_ch2">
+                <div class="bnc-ring"><div class="bnc-core"></div></div>
+                <div class="bnc-meta">
+                  <strong>CH 2</strong>
+                  <span>1MΩ // 15pF 300Vrms CAT I</span>
+                </div>
+              </div>
+              <div class="probe-comp-lug" id="lugProbeComp" data-ctrl-id="bnc_cal" title="点击将 CH1 快速连接到探头补偿 1kHz 3Vpp 方波输出端">
+                <div class="lug-terminals">
+                  <span class="lug-hook">⎍</span>
+                  <span class="lug-gnd">⏚</span>
+                </div>
+                <div class="lug-label">
+                  <strong>PROBE COMP</strong>
+                  <span>≈3.3Vpp 1kHz</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 右侧：示波器教学中心 & 按键详解侧边栏 ==================== -->
+    <aside class="teaching-sidebar" aria-label="Interactive Tutorial and Control Inspector">
+
+      <!-- 模块 A：当前按键/旋钮深度详解卡片 (悬停或操作任意控件自动更新) -->
+      <div class="inspector-card" id="inspectorCard">
+        <div class="inspector-header">
+          <span class="inspector-tag" data-i18n="inspectorTag">按键/旋钮实时解析</span>
+          <span class="inspector-zone-badge" id="inspZoneBadge">VERTICAL · 垂直区</span>
+        </div>
+        <div class="inspector-titles">
+          <h2 id="inspTitleZh">伏/格 垂直灵敏度旋钮 (Volts/Div)</h2>
+          <p class="insp-title-en" id="inspTitleEn">Vertical Scale / Volts per Division</p>
+        </div>
+        <div class="inspector-body">
+          <div class="insp-block">
+            <h3 data-i18n="inspWhatTitle">核心作用</h3>
+            <p id="inspDesc">调节屏幕垂直方向每一大格（Division）代表的电压值。顺时针旋转放大波形（数值变小，如 500mV/div），逆时针旋转缩小波形（数值变大，如 5V/div）。</p>
+          </div>
+          <div class="insp-block tip-block">
+            <h3 data-i18n="inspTipTitle">实战技巧 &amp; 常见误区</h3>
+            <p id="inspTip">读数口诀：波形占满屏幕垂直方向的 60%~80%（约 4~6 格）时测量最精准！过小会增大数字化量化误差，过大超出屏幕顶部/底部会导致波形削顶失真。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 模块 B：分步实操闯关教学 & 全按键速查表 -->
+      <div class="tutorial-card">
+        <div class="tut-tabs">
+          <button class="tut-tab active" data-tab="lessons" data-i18n="tabLessons">6步交互实操课</button>
+          <button class="tut-tab" data-tab="glossary" data-i18n="tabGlossary">全部按键速查词典</button>
+        </div>
+
+        <!-- 选项卡 1：交互式实操教学任务 -->
+        <div class="tut-pane active" id="paneLessons">
+          <div class="lesson-progress-row">
+            <div class="lesson-steps-nav" id="lessonStepsNav">
+              <!-- JS 渲染 1~6 步按钮 -->
+            </div>
+            <span class="lesson-score" id="lessonProgressText">进度 0/6</span>
+          </div>
+
+          <div class="lesson-box" id="lessonContentBox">
+            <div class="lesson-status-bar">
+              <span class="lesson-step-tag" id="lessonStepTag">第 1 课 · 新手必学</span>
+              <span class="lesson-check-badge" id="lessonCheckBadge">等待操作...</span>
+            </div>
+            <h3 class="lesson-title" id="lessonTitle">1. 探头自检与一键自动捕获 (Auto Scale)</h3>
+            <p class="lesson-goal" id="lessonGoal"></p>
+            <div class="lesson-task-box">
+              <strong data-i18n="lblActionTask">实操任务：</strong>
+              <p id="lessonTaskDesc"></p>
+            </div>
+            <div class="lesson-principle-box">
+              <strong data-i18n="lblPrinciple">原理解析：</strong>
+              <p id="lessonPrinciple"></p>
+            </div>
+            <div class="lesson-footer">
+              <button class="btn-secondary" id="btnHighlightTarget" data-i18n="btnShowWhere">闪烁提示目标按钮</button>
+              <button class="btn-primary" id="btnNextLesson" data-i18n="btnNextLesson">下一课 →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 选项卡 2：全部按键中英对照速查表 -->
+        <div class="tut-pane hidden" id="paneGlossary">
+          <div class="glossary-filter">
+            <input type="search" id="glossarySearch" placeholder="搜索按键中/英文，如 Trigger, 耦合, Volts..." />
+          </div>
+          <div class="glossary-list" id="glossaryList">
+            <!-- JS 动态渲染中英文完整字典列表，点击可高亮面板对应按键 -->
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
