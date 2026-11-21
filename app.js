@@ -1937,6 +1937,135 @@
     document.getElementById('glossarySearch').addEventListener('input', (e) => {
       renderGlossaryList(e.target.value);
     });
+
+    // ==================== 19. 底部零基础新手知识学院交互逻辑 ====================
+    initBeginnerAcademy();
+  }
+
+  const PIPELINE_DOCS = {
+    probe: {
+      step: 'STEP 1 · 信号入口',
+      title: '1. 示波器探头 (Probe 1X / 10X) —— 高阻抗“听诊器”',
+      analogy: '<strong>💡 通俗比喻：</strong>就像医生的听诊器，既要清晰听到被测电路的电压心跳，又绝对不能因为接上探头而“偷走”电路里的电流导致被测电路死机或停振（负载效应）。',
+      explain: '<strong>⚙️ 硬件原理：</strong>如果直接拿一根普通铜线连示波器，长导线的寄生电容（近 100pF）会把高频信号直接对地短路！标准无源探头拨在 <strong>10X 挡</strong> 时，内部串联 9MΩ 电阻与补偿电容，配合示波器 BNC 口的 1MΩ 阻抗，构成 <strong>10MΩ 极高阻抗 + ~10pF 极低电容</strong> 的 10:1 分压器，保证满带宽测量。',
+      ctrlName: 'BNC 输入接口 & 屏幕右侧软键 F3 (探头比 1X/10X)',
+      ctrlId: 'softkey_f3'
+    },
+    afe: {
+      step: 'STEP 2 · 垂直调理',
+      title: '2. 模拟前端 (AFE: 耦合隔直、衰减器与可变增益放大器)',
+      analogy: '<strong>💡 通俗比喻：</strong>就像相机的“光圈与滤镜”。不管外面来的是几毫伏的微弱星光，还是几十伏的强光，都要先由模拟前端缩放调理到最适合后端传感器（ADC）接收的标准电压范围内。',
+      explain: '<strong>⚙️ 硬件原理：</strong>包含：① <strong>AC/DC 耦合继电器</strong>（AC 模式下串入隔直电容挡住直流分量）；② <strong>电阻电容衰减网络与 PGA 放大器</strong>（当你拧动 <code>Volts/Div</code> 伏/格旋钮时，听到真机里“咔哒”的继电器声，就是在切换硬件衰减比）；③ <strong>20MHz 硬件带宽限制低通滤波器</strong>。',
+      ctrlName: '垂直区【伏/格 Volts/Div】大旋钮 & 【CH1 耦合 DC/AC】',
+      ctrlId: 'knob_ch1_scale'
+    },
+    adc: {
+      step: 'STEP 3 · 数字化采样',
+      title: '3. 高速 ADC 模数转换器 (Sample Rate: GSa/s & 8/12-bit)',
+      analogy: '<strong>💡 通俗比喻：</strong>一台每秒钟连拍 10 亿张照片（1 GSa/s）的“超高速连拍相机”，把连续变化的模拟电压切成一串密集的数字坐标点。',
+      explain: '<strong>⚙️ 硬件原理：</strong>ADC 有两个核心维度：① <strong>水平时间采样率（Sample Rate）</strong>，如 1 GSa/s 代表每隔 1 纳秒测量一次电压；② <strong>垂直量化位数（Resolution）</strong>，传统 8-bit 示波器将屏幕垂直电压分为 256 级台阶，新一代 12-bit HD 示波器分为 4096 级台阶，看微小纹波更细腻。',
+      ctrlName: '水平区【秒/格 Sec/Div】时基大旋钮 (决定当前采样间隔)',
+      ctrlId: 'knob_sec_div'
+    },
+    trigger: {
+      step: 'STEP 4 · 同步灵魂',
+      title: '4. 硬件触发比较器 (Trigger Comparator —— 为什么波形能定住？)',
+      analogy: '<strong>💡 通俗比喻：</strong>给高速旋转的电风扇叶拍频闪照片——如果闪光灯乱闪，拍出来就是一团糊影；只有每次严格在“1号扇叶转到正上方（跨过触发电平且为上升沿）”那一瞬间按下快门，风扇看起来就像静止在原地一样！',
+      explain: '<strong>⚙️ 硬件原理：</strong>信号在送入 ADC 的同时，会分出一路由高速比较器与你设定的 <strong>触发电平 (Trigger Level)</strong> 实时比对。一旦检测到电压满足设定的上升沿（↑）或下降沿（↓）穿越阈值，立即向存储控制器发出 <code>TRIG\'D</code> 同步锁存信号，让每一帧波形的起点严格对齐在屏幕水平触发点上。',
+      ctrlName: '触发区【触发电平 Level】旋钮 & 【触发边沿 Slope】',
+      ctrlId: 'knob_trig_level'
+    },
+    memory: {
+      step: 'STEP 5 · 环形波形仓库',
+      title: '5. 高速采集存储器 (Acquisition Memory Depth: Mpts)',
+      analogy: '<strong>💡 通俗比喻：</strong>就像行车记录仪的“循环录像内存卡”。它一直在后台源源不断地循环写入 ADC 采到的点，一旦收到第 4 步发来的“触发碰撞信号”，就把触发点前后的整段数据一起冻结保存下来！',
+      explain: '<strong>⚙️ 硬件原理：</strong>这也是为什么数字示波器能看到 <strong>“触发事件发生之前（Pre-trigger 预触发）”</strong> 的历史波形！存储深度越大（如 50Mpts），在大时基（慢速）采集长波形时就越不需要被迫降低采样率，按下 <code>Run/Stop</code> 或 <code>Single</code> 停住后，放大几千倍依然能看清每一个高频脉冲细节。',
+      ctrlName: '系统区【运行/停止 Run/Stop】与【单次捕获 Single】',
+      ctrlId: 'btn_single'
+    },
+    display: {
+      step: 'STEP 6 · 数字荧光成像',
+      title: '6. 数字荧光处理 (DPO)、数学运算与液晶屏渲染',
+      analogy: '<strong>💡 通俗比喻：</strong>把成百上千帧抓拍到的波形轨迹像半透明胶片一样叠印在屏幕上——经常走的主轨迹最亮，偶尔闪现一次的异常毛刺也会留下淡淡的荧光残影。',
+      explain: '<strong>⚙️ 硬件原理：</strong>内部 FPGA 与 DSP 对采集内存中的数据进行内插（$\sin(x)/x$）、自动参数统计（计算 Vpp、Freq、Duty）、数学运算（<code>CH1-CH2</code> 差分或 <code>FFT</code> 频谱变换）以及多级灰度余晖合成，最终绘制在 8×10 标准网格荧光屏上。',
+      ctrlName: '系统区【余晖 Persist】、【自动测量 Measure】与【数学运算 Math】',
+      ctrlId: 'btn_persist'
+    }
+  };
+
+  function initBeginnerAcademy() {
+    let currentPipeCtrlId = 'softkey_f3';
+
+    // 1. 学院顶部 5 大知识板块 Tab 切换
+    document.querySelectorAll('.acad-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.acad-tab').forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+        const targetKey = tab.dataset.acadTab;
+        document.querySelectorAll('.acad-pane').forEach((pane) => {
+          pane.classList.toggle('hidden', pane.id !== `acad-${targetKey}`);
+        });
+      });
+    });
+
+    // 2. 6 级信号链路节点点击切换与联动定位
+    document.querySelectorAll('.pipe-node').forEach((node) => {
+      node.addEventListener('click', () => {
+        document.querySelectorAll('.pipe-node').forEach((n) => n.classList.remove('active'));
+        node.classList.add('active');
+
+        const key = node.dataset.pipe;
+        const info = PIPELINE_DOCS[key];
+        if (!info) return;
+
+        currentPipeCtrlId = info.ctrlId;
+        document.getElementById('pipeDetailStep').textContent = info.step;
+        document.getElementById('pipeDetailTitle').textContent = info.title;
+        document.getElementById('pipeDetailAnalogy').innerHTML = info.analogy;
+        document.getElementById('pipeDetailExplain').innerHTML = info.explain;
+        document.getElementById('pipeDetailCtrlName').textContent = info.ctrlName;
+      });
+    });
+
+    const btnPipeLocate = document.getElementById('btnPipeLocate');
+    if (btnPipeLocate) {
+      btnPipeLocate.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => highlightControlOnPanel(currentPipeCtrlId), 350);
+      });
+    }
+
+    // 3. 新手选型带宽 & 采样率计算器 (5倍法则)
+    const calcInput = document.getElementById('calcInputFreq');
+    if (calcInput) {
+      const updateCalculator = () => {
+        const fMhz = Math.max(0.1, Number(calcInput.value) || 20);
+        const recBwMhz = fMhz * 5;
+        const recSrGsa = (recBwMhz * 5) / 1000;
+
+        // 向上取整到主流商用示波器标准带宽档位
+        const stdBws = [50, 70, 100, 200, 350, 500, 1000, 2000, 4000];
+        const matchedStd = stdBws.find((b) => b >= recBwMhz) || Math.ceil(recBwMhz);
+
+        document.getElementById('calcOutBW').textContent =
+          `≥ ${recBwMhz.toFixed(0)} MHz (建议选 ${matchedStd}MHz 档)`;
+        document.getElementById('calcOutSR').textContent =
+          recSrGsa >= 1 ? `≥ ${recSrGsa.toFixed(1)} GSa/s` : `≥ ${(recSrGsa * 1000).toFixed(0)} MSa/s`;
+
+        let tierText = '主流入门台式机 (如普源 DHO804 / 鼎阳 SDS804X HD · ¥1800~¥2600)';
+        if (matchedStd <= 50) {
+          tierText = '入门台式或便携机 (如 DS1054Z / DHO802 / 便携示波器 · ¥600~¥1999)';
+        } else if (matchedStd > 100 && matchedStd <= 350) {
+          tierText = '进阶研发主力机 (如 RIGOL MSO5000 / SIGLENT SDS2000X HD · ¥4000~¥12000)';
+        } else if (matchedStd > 350) {
+          tierText = '高端高速数字示波器 (如 Keysight 3000T/HD3 / Tek MSO4/5 · ¥25,000+)';
+        }
+        document.getElementById('calcOutTier').textContent = tierText;
+      };
+
+      calcInput.addEventListener('input', updateCalculator);
+      updateCalculator();
+    }
   }
 
   // ==================== 18. 初始化入口 ====================

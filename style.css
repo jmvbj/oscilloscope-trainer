@@ -1465,8 +1465,563 @@ body {
   z-index: 10;
 }
 
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.academy-jump-btn {
+  text-decoration: none;
+  background: linear-gradient(135deg, rgba(255, 212, 38, 0.18), rgba(255, 140, 36, 0.18));
+  border: 1px solid rgba(255, 212, 38, 0.55);
+  color: var(--ch1-color);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 11px;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.academy-jump-btn:hover {
+  background: rgba(255, 212, 38, 0.28);
+  color: #fff;
+}
+
+/* ==================== 底部：零基础新手知识学院 (Beginner Academy) ==================== */
+.academy-section {
+  max-width: 1820px;
+  width: 100%;
+  margin: 4px auto 32px;
+  padding: 0 16px;
+}
+
+.academy-container {
+  background: #151922;
+  border: 1px solid #2b3346;
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+}
+
+.academy-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid #262f42;
+  padding-bottom: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.academy-pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ch2-color);
+  background: rgba(0, 229, 255, 0.12);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  padding: 2px 9px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.academy-title {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.academy-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  max-width: 780px;
+  line-height: 1.5;
+}
+
+.academy-nav-tabs {
+  display: flex;
+  gap: 6px;
+  background: #0e1219;
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid #252e40;
+  flex-wrap: wrap;
+}
+
+.acad-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.acad-tab:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.acad-tab.active {
+  background: #2563eb;
+  color: #fff;
+}
+
+.acad-pane.hidden {
+  display: none;
+}
+
+/* 模块 1：工作原理交互信号链路图 */
+.principle-intro h3 {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.principle-intro p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.signal-pipeline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.pipe-node {
+  flex: 1;
+  min-width: 155px;
+  background: #1b212e;
+  border: 1px solid #354056;
+  border-radius: 9px;
+  padding: 11px 10px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  transition: all 0.16s ease;
+}
+
+.pipe-node:hover {
+  border-color: var(--ch1-color);
+  transform: translateY(-2px);
+}
+
+.pipe-node.active {
+  background: linear-gradient(180deg, rgba(255, 212, 38, 0.16), rgba(255, 212, 38, 0.05));
+  border-color: var(--ch1-color);
+  box-shadow: 0 0 15px rgba(255, 212, 38, 0.2);
+}
+
+.pipe-step {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ch1-color);
+}
+
+.pipe-node strong {
+  font-size: 13px;
+  color: #fff;
+}
+
+.pipe-node em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #8fa3bf;
+}
+
+.pipe-arrow {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: #5b6b86;
+  font-weight: 700;
+}
+
+.pipe-detail-card {
+  display: grid;
+  grid-template-columns: 1fr 290px;
+  gap: 18px;
+  background: #10141c;
+  border: 1px solid #283246;
+  border-left: 4px solid var(--ch1-color);
+  border-radius: 10px;
+  padding: 16px 18px;
+  align-items: center;
+}
+
+.pipe-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ch1-color);
+  margin-bottom: 4px;
+}
+
+.pipe-detail-main h4 {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.pipe-analogy,
+.pipe-explain {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #d1d9e6;
+  margin-bottom: 6px;
+}
+
+.pipe-ctrl-box {
+  background: #171c27;
+  border: 1px solid #2e384e;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pipe-ctrl-box span {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.pipe-ctrl-box strong {
+  font-size: 13px;
+  color: var(--ch2-color);
+}
+
+/* 模块 2：四大核心指标与带宽选型计算器 */
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.spec-card {
+  background: #10141c;
+  border: 1px solid #263044;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.spec-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.spec-num {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ch1-color);
+  background: rgba(255, 212, 38, 0.12);
+  border: 1px solid rgba(255, 212, 38, 0.35);
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spec-head h4 {
+  font-size: 15px;
+  color: #fff;
+}
+
+.spec-head em {
+  font-style: normal;
+  font-size: 12px;
+  color: #8fa3bf;
+}
+
+.spec-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #cbd5e1;
+}
+
+.spec-rule {
+  background: rgba(37, 99, 235, 0.1);
+  border-left: 3px solid #3b82f6;
+  padding: 8px 11px;
+  border-radius: 4px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #dbeafe;
+}
+
+.bw-calculator-box {
+  background: linear-gradient(135deg, #172033 0%, #111622 100%);
+  border: 1px solid #334568;
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.calc-left h4 {
+  font-size: 15px;
+  color: var(--ch1-color);
+  margin-bottom: 3px;
+}
+
+.calc-left p {
+  font-size: 12.5px;
+  color: #b4c2d8;
+}
+
+.calc-controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.calc-controls label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.calc-controls input {
+  width: 85px;
+  background: #0c1018;
+  border: 1px solid var(--ch1-color);
+  color: var(--ch1-color);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 5px 8px;
+  border-radius: 6px;
+  text-align: right;
+}
+
+.calc-results {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.calc-res-item {
+  background: #0d121b;
+  border: 1px solid #28354e;
+  border-radius: 7px;
+  padding: 7px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.calc-res-item span {
+  font-size: 11px;
+  color: #8fa3bf;
+}
+
+.calc-res-item strong {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--run-green);
+}
+
+/* 模块 3：示波器常见分类 */
+.types-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.type-card {
+  background: #10141c;
+  border: 1px solid #263044;
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.type-card.highlight-type {
+  border-color: var(--ch1-color);
+  background: linear-gradient(180deg, rgba(255, 212, 38, 0.08), #10141c 45%);
+}
+
+.type-era {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ch2-color);
+}
+
+.type-card h4 {
+  font-size: 14.5px;
+  color: #fff;
+}
+
+.type-card p {
+  font-size: 12.5px;
+  color: #b4c2d8;
+  line-height: 1.55;
+}
+
+.type-card ul {
+  padding-left: 16px;
+  font-size: 12px;
+  color: #cbd5e1;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* 模块 4：主流品牌与经典型号对比表 */
+.models-intro h3 {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.models-intro p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.brand-table-wrap {
+  overflow-x: auto;
+}
+
+.brand-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #10141c;
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 12.5px;
+}
+
+.brand-table th {
+  background: #1b2230;
+  color: #e2e8f0;
+  text-align: left;
+  padding: 11px 14px;
+  font-weight: 700;
+  border-bottom: 1px solid #2e384e;
+}
+
+.brand-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid #1e2636;
+  color: #cbd5e1;
+  line-height: 1.55;
+  vertical-align: top;
+}
+
+.brand-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.brand-name {
+  display: block;
+  font-size: 14px;
+}
+
+.brand-sub {
+  display: block;
+  font-size: 11px;
+  color: #8fa3bf;
+  margin-top: 2px;
+}
+
+/* 模块 5：防炸机安全铁律与 1X/10X 探头指南 */
+.safety-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.safety-card {
+  background: #10141c;
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.safety-card.danger-card {
+  border: 1px solid rgba(255, 59, 78, 0.55);
+  border-left: 5px solid var(--stop-red);
+}
+
+.safety-card.warning-card {
+  border: 1px solid rgba(255, 212, 38, 0.55);
+  border-left: 5px solid var(--ch1-color);
+}
+
+.safety-tag {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--stop-red);
+}
+
+.warning-card .safety-tag {
+  color: var(--ch1-color);
+}
+
+.safety-card h4 {
+  font-size: 16px;
+  color: #fff;
+}
+
+.safety-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #d1d9e6;
+}
+
+.safety-card ul {
+  padding-left: 18px;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
 @media (max-width: 1320px) {
   .workspace {
     grid-template-columns: 1fr;
   }
+  .specs-grid,
+  .types-grid,
+  .safety-grid,
+  .pipe-detail-card {
+    grid-template-columns: 1fr;
+  }
 }
+
